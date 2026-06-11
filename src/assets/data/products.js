@@ -4,7 +4,7 @@ export const IPHONE_16_PRO = {
   id: 1,
   name: "iPhone 16 Pro",
   title: "iPhone 巅峰之作",
-  image: "/images/phones/compare_iphone-16-pro.png",
+  image: "/public/images/phones/compare_iphone-16-pro.png",
   carouselImages: [
     "/images/phones/carousel_1.webp",
     "/images/phones/carousel_2.webp",
