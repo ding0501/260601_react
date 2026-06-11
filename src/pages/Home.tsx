@@ -29,21 +29,25 @@ function Home() {
         product={SUGGESTED_PROUDCT.product}
         imageUrl={SUGGESTED_PROUDCT.imageSrc}
       />
+
       <ProductList
         title={t(`home_page.newarrivals`)}
         datalength={NEW_ARRIVALS_LIST.length}
       >
-        {NEW_ARRIVALS_LIST.map((item) => (
-          <NewArrivalWithBannerAndSoldOutCheck
-            key={item.title}
-            {...item}
-            scale={1.05}
-          />
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-5">
+          {NEW_ARRIVALS_LIST.map((item) => (
+            <NewArrivalWithBannerAndSoldOutCheck
+              key={item.title}
+              {...item}
+              scale={1.05}
+            />
+          ))}
+        </div>
       </ProductList>
+
       <ProductList title={t(`home_page.offers`)} datalength={OFFER_LIST.length}>
         {OFFER_LIST.map((item) => (
-          <OfferWithSoldOutCheck key={item.title} {...item} />
+          <OfferWithSoldOutCheck key={item.title} {...item} scale={1.05} />
         ))}
       </ProductList>
     </div>
