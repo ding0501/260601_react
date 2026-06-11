@@ -13,7 +13,7 @@ const CheckOut = () => {
   const { clearCart } = useContext(ShoppingCartContext);
   const { token } = useSelector((s: RootState) => s.user);
   const { data, loading, error, fetchData } = useApiData<Order>(
-    "/api/orders/place",
+    "http://152.136.182.210:12231/api/orders/place",
     {
       method: "POST",
       autoFetch: false,

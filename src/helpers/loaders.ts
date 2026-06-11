@@ -3,10 +3,13 @@ export const loadProducts = async (
   signal?: AbortSignal,
 ) => {
   try {
-    const response = await fetch(`/api/products/${productId}`, {
-      method: "GET",
-      signal: signal ?? null,
-    });
+    const response = await fetch(
+      `http://152.136.182.210:12231/api/products/${productId}`,
+      {
+        method: "GET",
+        signal: signal ?? null,
+      },
+    );
     if (!response.ok) {
       throw new Error(
         `Error fetching product wirh ID ${productId}:${response.statusText}`,

@@ -9,7 +9,6 @@ export const IPHONE_16_PRO = {
     "http://152.136.182.210:12231/images/phones/carousel_1.webp",
     "http://152.136.182.210:12231/images/phones/carousel_2.webp",
   ],
-
   startingPrice: 7999.0,
   installments: 250.0,
   models: [

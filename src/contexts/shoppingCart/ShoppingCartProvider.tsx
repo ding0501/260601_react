@@ -19,7 +19,7 @@ interface ShoppingCartProviderProps {
 
 const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
   const { data: shoppingCartData, fetchData } = useApiData<ShoppingCart>(
-    "/api/ShoppingCart",
+    "http://152.136.182.210:12231/api/ShoppingCart",
     {
       autoFetch: false,
     },

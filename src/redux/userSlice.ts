@@ -17,7 +17,7 @@ export const login = createAsyncThunk<
   string, //返回值类型，jwt
   { username: string; password: string } //credentials 类型
 >("user/login", async (credentials) => {
-  const response = await fetch("/api/auth/login", {
+  const response = await fetch("http://152.136.182.210:12231/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

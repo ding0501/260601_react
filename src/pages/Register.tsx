@@ -5,10 +5,13 @@ import { useNavigate } from "react-router-dom";
 function SignUp() {
   const navigate = useNavigate();
 
-  const { data, loading, error, fetchData } = useApiData("/api/auth/register", {
-    method: "POST",
-    autoFetch: false,
-  });
+  const { data, loading, error, fetchData } = useApiData(
+    "http://152.136.182.210:12231/api/auth/register",
+    {
+      method: "POST",
+      autoFetch: false,
+    },
+  );
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

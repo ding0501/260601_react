@@ -11,9 +11,12 @@ import { CartItem } from "@/types/custom";
 import useApiData from "./useApiData";
 
 const useShoppingCartAction = (dispatch: Dispatch<CartAction>) => {
-  const { data, fetchData: callApi } = useApiData("/api/ShoppingCart/items", {
-    autoFetch: false,
-  });
+  const { data, fetchData: callApi } = useApiData(
+    "http://152.136.182.210:12231/api/ShoppingCart/items",
+    {
+      autoFetch: false,
+    },
+  );
 
   const jwt = localStorage.getItem("token");
   return {
