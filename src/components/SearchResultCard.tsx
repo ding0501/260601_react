@@ -8,32 +8,20 @@ interface SearchResultCardProps {
   onAddToCart: (product: Product) => void;
 }
 
-const getImageUrl = (imagePath: string): string => {
-  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
-    return imagePath;
-  }
-
-  if (imagePath.startsWith("//")) {
-    return `https:${imagePath}`;
-  }
-
-  if (import.meta.env.DEV) {
-    return `http://152.136.182.210:12231${imagePath}`;
-  }
-
-  const baseUrl = import.meta.env.VITE_IMAGE_BASE_URL || "";
-  return `${baseUrl}${imagePath}`;
-};
-
 const SearchResultCard = ({ product, onAddToCart }: SearchResultCardProps) => {
   const navigate = useNavigate();
-  const imageUrl = useMemo(() => getImageUrl(product.image), [product.image]);
+
+  // 直接使用原始路径，不做任何处理，先看看到底是什么
+  const imageUrl = product.image;
+
+  console.log("图片原始路径:", imageUrl);
 
   const handleImageError = (
     e: React.SyntheticEvent<HTMLImageElement, Event>,
   ) => {
-    e.currentTarget.src =
-      "https://placehold.co/400x400/e2e8f0/64748b?text=No+Image";
+    console.error("图片加载失败 URL:", e.currentTarget.src);
+    // 临时显示文本而不是图片，方便调试
+    e.currentTarget.style.display = "none";
   };
 
   return (
@@ -44,14 +32,17 @@ const SearchResultCard = ({ product, onAddToCart }: SearchResultCardProps) => {
             hover:transform hover:scale-105 transition-all duration-300
             border border-gray-100 dark:border-gray-700"
     >
-      <div className="aspect-square object-contain rounded-xl bg-gray-100 dark:bg-gray-800">
+      <div className="aspect-square object-contain rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
         <img
           className="w-full h-full object-contain rounded-xl"
           src={imageUrl}
           alt={product.name}
           onError={handleImageError}
-          loading="lazy"
         />
+        {/* 调试信息：显示图片路径 */}
+        <div className="absolute text-xs text-gray-500 bg-white bg-opacity-75 p-1 rounded">
+          {imageUrl}
+        </div>
       </div>
       <h3 className="text-2xl font-semibold mt-2 text-gray-900 dark:text-white">
         {product.name}
