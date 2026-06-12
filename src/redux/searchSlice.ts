@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Product } from "../types/custom";
 import { createSlice } from "@reduxjs/toolkit";
-import { getApiUrl } from "@/utils/url";
 
 export const fetchSearchResults = createAsyncThunk<
   Product[],
@@ -12,23 +11,18 @@ export const fetchSearchResults = createAsyncThunk<
     controller.abort();
   });
 
-  // 修改这里：使用 getApiUrl 而不是直接使用 VITE_API_BASE
-  const apiUrl = getApiUrl(
-    `/api/search?keyword=${encodeURIComponent(keyword)}`,
+  const response = await fetch(
+    `${import.meta.env.VITE_API_BASE}/api/products?keyword=${encodeURIComponent(keyword)}`,
+    { signal: controller.signal },
   );
-
-  console.log("搜索请求URL:", apiUrl); // 调试用
-
-  const response = await fetch(apiUrl, { signal: controller.signal });
-
   if (response.status == 404) {
-    throw new Error("没有找到商品");
+    throw new Error("没有找到商品"); ////抛出的错误会自动进入 RTK 的 rejected 分支
   }
   if (!response.ok) {
-    throw new Error("请求失败");
+    throw new Error("请求失败"); //抛出的错误会自动进入 RTK 的 rejected 分支
   }
   const data: Product[] = await response.json();
-  return data;
+  return data; // 返回的数据会自动进入 RTK 的 fulfilled 分支
 });
 
 export interface SearchState {
@@ -46,13 +40,7 @@ const initialState: SearchState = {
 export const searchSlice = createSlice({
   name: "search",
   initialState,
-  reducers: {
-    clearSearch: (state) => {
-      state.items = [];
-      state.error = null;
-      state.isLoading = false;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchSearchResults.pending, (state) => {
@@ -66,6 +54,7 @@ export const searchSlice = createSlice({
       })
       .addCase(fetchSearchResults.rejected, (state, action) => {
         if (action.error.message === "Aborted") {
+          //中止请求，不更新状态
           console.log("请求已取消");
           state.error = "请求已取消";
         } else {
@@ -77,5 +66,4 @@ export const searchSlice = createSlice({
   },
 });
 
-export const { clearSearch } = searchSlice.actions;
 export default searchSlice.reducer;
