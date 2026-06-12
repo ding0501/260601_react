@@ -37,6 +37,12 @@ const Category = () => {
     carouselImages: product.carouselImages?.map((img) => fixUrl(img)),
   }));
 
+  // 修复 features 中的图片URL（ImageSlider 使用的数据）
+  const fixedFeatures = productCategory?.features?.map((feature) => ({
+    ...feature,
+    image: fixUrl(feature.image),
+  }));
+
   // 修复视频URL
   const fixedRegularSrc = fixUrl(productCategory?.videos?.regularSrc);
   const fixedSmallSrc = fixUrl(productCategory?.videos?.smallSrc);
@@ -53,8 +59,8 @@ const Category = () => {
       />
       {/* 视频展示 - 使用修复后的视频地址 */}
       <VideoHero videoSrc={fixedRegularSrc} videoSmallSrc={fixedSmallSrc} />
-      {/* 走马灯 */}
-      <ImageSlider features={productCategory!.features} />
+      {/* 走马灯 - 使用修复后的 features */}
+      <ImageSlider features={fixedFeatures || productCategory!.features} />
       {/* 系列产品比较 table */}
       <CompareTable products={fixedProducts || productCategory!.products} />
     </div>
