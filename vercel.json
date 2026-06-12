@@ -3,11 +3,6 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/proxy-img/:path(.*)",
-      "destination": "http://152.136.182.210:12231/:path"
-    },
-
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
