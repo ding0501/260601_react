@@ -64,9 +64,11 @@ const useApiData = <T>(apiUrl: string, options: UseApiOptions = {}) => {
       setData(result);
       setError(null);
     } catch (error) {
-      console.error("加载数据失败：", error);
-      setError(error instanceof Error ? error.message : "加载数据失败");
-      setData(null);
+      if ((error as Error).name !== "AbortError") {
+        console.error("加载数据失败：", error);
+        setError(error instanceof Error ? error.message : "加载数据失败");
+        setData(null);
+      }
     } finally {
       setLoading(false);
       abortControllerRef.current = null;

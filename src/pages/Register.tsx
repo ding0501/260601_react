@@ -6,7 +6,7 @@ function SignUp() {
   const navigate = useNavigate();
 
   const { data, loading, error, fetchData } = useApiData(
-    "http://152.136.182.210:12231/api/auth/register",
+    "${import.meta.env.VITE_API_BASE}/api/auth/register",
     {
       method: "POST",
       autoFetch: false,

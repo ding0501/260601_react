@@ -17,13 +17,16 @@ export const login = createAsyncThunk<
   string, //返回值类型，jwt
   { username: string; password: string } //credentials 类型
 >("user/login", async (credentials) => {
-  const response = await fetch("http://152.136.182.210:12231/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const response = await fetch(
+    "${import.meta.env.VITE_API_BASE}/api/auth/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
     },
-    body: JSON.stringify(credentials),
-  });
+  );
 
   if (!response.ok) {
     throw new Error("登录失败");

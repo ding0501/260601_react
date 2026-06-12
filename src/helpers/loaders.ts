@@ -4,7 +4,7 @@ export const loadProducts = async (
 ) => {
   try {
     const response = await fetch(
-      `http://152.136.182.210:12231/api/products/${productId}`,
+      `${import.meta.env.VITE_API_BASE}/api/products/${productId}`,
       {
         method: "GET",
         signal: signal ?? null,

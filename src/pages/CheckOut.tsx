@@ -13,7 +13,7 @@ const CheckOut = () => {
   const { clearCart } = useContext(ShoppingCartContext);
   const { token } = useSelector((s: RootState) => s.user);
   const { data, loading, error, fetchData } = useApiData<Order>(
-    "http://152.136.182.210:12231/api/orders/place",
+    "${import.meta.env.VITE_API_BASE}/api/orders/place",
     {
       method: "POST",
       autoFetch: false,

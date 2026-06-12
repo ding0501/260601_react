@@ -22,7 +22,7 @@ const Category = () => {
     loading,
     error,
   } = useApiWithReducer<CategoryType>(
-    `http://152.136.182.210:12231/api/categories/${category}`,
+    `${import.meta.env.VITE_API_BASE}/api/categories/${category}`,
   );
 
   if (loading || !productCategory) {
