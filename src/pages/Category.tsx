@@ -24,14 +24,22 @@ const Category = () => {
     error,
   } = useApiWithReducer<CategoryType>(getApiUrl(`/api/categories/${category}`));
 
-  // 修复图片URL：把http地址转成相对路径
+  // 通用修复函数：移除 HTTP 域名，转成本地路径
+  const fixUrl = (url: string) => {
+    if (!url) return url;
+    return url.replace("http://152.136.182.210:12231", "");
+  };
+
+  // 修复产品中的图片URL
   const fixedProducts = productCategory?.products?.map((product) => ({
     ...product,
-    image: product.image?.replace("http://152.136.182.210:12231", ""),
-    carouselImages: product.carouselImages?.map((img) =>
-      img?.replace("http://152.136.182.210:12231", ""),
-    ),
+    image: fixUrl(product.image),
+    carouselImages: product.carouselImages?.map((img) => fixUrl(img)),
   }));
+
+  // 修复视频URL
+  const fixedRegularSrc = fixUrl(productCategory?.videos?.regularSrc);
+  const fixedSmallSrc = fixUrl(productCategory?.videos?.smallSrc);
 
   if (loading || !productCategory) {
     return <Skeleton />;
@@ -43,11 +51,8 @@ const Category = () => {
         title={productCategory!.title}
         subTitle={productCategory!.subTitle}
       />
-      {/* 视频展示 */}
-      <VideoHero
-        videoSrc={productCategory!.videos.regularSrc}
-        videoSmallSrc={productCategory!.videos.smallSrc}
-      />
+      {/* 视频展示 - 使用修复后的视频地址 */}
+      <VideoHero videoSrc={fixedRegularSrc} videoSmallSrc={fixedSmallSrc} />
       {/* 走马灯 */}
       <ImageSlider features={productCategory!.features} />
       {/* 系列产品比较 table */}
@@ -55,4 +60,5 @@ const Category = () => {
     </div>
   );
 };
+
 export default Category;
