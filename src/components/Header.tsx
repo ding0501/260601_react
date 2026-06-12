@@ -205,35 +205,39 @@ const Header = () => {
           <AiOutlineMenu size={24} />
         </button>
       </div>
+
+      {/* 修改侧边菜单 - 修复点击问题 */}
       <div
-        className={`md:hidden fixed top-0 right-0 h-full w-64 ${!isOpen && "hidden"}`}
+        className={`md:hidden fixed top-0 right-0 h-full w-64 z-50 transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
         <div
           className="flex flex-col mt-17 space-y-6 
-        bg-apple-light
-        dark:bg-apple-dark
+          bg-apple-light
+          dark:bg-apple-dark
           shadow-apple-md 
-          text-center p-6 rounded-lg 
-        text-apple-text-light
-        dark:text-apple-text-dark"
+          text-center p-6 h-full
+          text-apple-text-light
+          dark:text-apple-text-dark"
         >
           {SHOPPING_PAGES.map((page) => (
             <NavLink
               key={page.path}
               to={page.path}
               className={({ isActive }) => `
-            hover:text-apple-blue ${
-              isActive
-                ? "text-apple-blue font-extrabold"
-                : "text-apple-text-light dark:text-apple-text-dark"
-            }
-          `}
+              hover:text-apple-blue ${
+                isActive
+                  ? "text-apple-blue font-extrabold"
+                  : "text-apple-text-light dark:text-apple-text-dark"
+              }
+            `}
               onClick={() => setIsOpen(false)}
             >
               {page.title}
             </NavLink>
           ))}
-          <hr className="bordr-t border-gray-300" />
+          <hr className="border-t border-gray-300" />
           {username ? (
             <>
               <span>{username}</span>
@@ -253,6 +257,7 @@ const Header = () => {
                       : "text-apple-text dark:text-apple-text-dark"
                   }`
                 }
+                onClick={() => setIsOpen(false)}
               >
                 {page.title}
               </NavLink>
@@ -260,16 +265,20 @@ const Header = () => {
           )}
         </div>
       </div>
+
+      {/* 遮罩层 - 确保在菜单下方 */}
       {isOpen && (
         <div
           className="fixed inset-0 
-          bg-apple-black/50 
-          dark:bg-apple-white/10
-          backdrop-blur-md"
+            bg-apple-black/50 
+            dark:bg-apple-white/10
+            backdrop-blur-md
+            z-40"
           onClick={() => setIsOpen(false)}
         ></div>
       )}
     </nav>
   );
 };
+
 export default Header;
