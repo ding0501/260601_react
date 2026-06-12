@@ -4,10 +4,10 @@ export const IPHONE_16_PRO = {
   id: 1,
   name: "iPhone 16 Pro",
   title: "iPhone 巅峰之作",
-  image: "/proxy-img/images/phones/compare_iphone-16-pro.png",
+  image: "/images/phones/compare_iphone-16-pro.png",
   carouselImages: [
-    "/proxy-img/images/phones/carousel_1.webp",
-    "/proxy-img/images/phones/carousel_2.webp",
+    "/images/phones/carousel_1.webp",
+    "/images/phones/carousel_2.webp",
   ],
   startingPrice: 7999.0,
   installments: 250.0,
