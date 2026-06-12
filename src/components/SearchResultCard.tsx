@@ -9,21 +9,19 @@ interface SearchResultCardProps {
 }
 
 const getImageUrl = (imagePath: string): string => {
-  if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
-    return imagePath.replace("http://", "https://");
-  }
-
-  if (imagePath.startsWith("//")) {
-    return `https:${imagePath}`;
-  }
+  if (!imagePath) return "";
 
   if (import.meta.env.DEV) {
+    if (imagePath.startsWith("http")) return imagePath;
     return `http://152.136.182.210:12231${imagePath}`;
   }
 
-  const baseUrl =
-    import.meta.env.VITE_IMAGE_BASE_URL || "https://152.136.182.210:12231";
-  return `${baseUrl}${imagePath}`;
+  if (imagePath.includes("152.136.182.210")) {
+    const url = new URL(imagePath);
+    return url.pathname;
+  }
+
+  return imagePath;
 };
 
 const SearchResultCard = ({ product, onAddToCart }: SearchResultCardProps) => {

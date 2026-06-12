@@ -10,6 +10,7 @@
       "source": "/images/:path*",
       "destination": "http://152.136.182.210:12231/images/:path*"
     },
+
     {
       "source": "/(.*)",
       "destination": "/index.html"
