@@ -8,7 +8,7 @@ export const getApiBaseUrl = () => {
   return "";
 };
 
-// 获取完整 API URL
+// 获取完整 API URL（只用于 API 请求，不用于图片）
 export const getApiUrl = (path) => {
   const baseUrl = getApiBaseUrl();
   // 确保 path 以 / 开头
