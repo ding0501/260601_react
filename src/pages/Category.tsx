@@ -21,9 +21,7 @@ const Category = () => {
     data: productCategory,
     loading,
     error,
-  } = useApiWithReducer<CategoryType>(
-    `http://152.136.182.210:12231/api/categories/${category}`,
-  );
+  } = useApiWithReducer<CategoryType>(`/api/categories/${category}`);
 
   if (loading || !productCategory) {
     return <Skeleton />;
