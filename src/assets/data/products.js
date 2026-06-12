@@ -220,11 +220,8 @@ export const MacBook_Air = {
   id: 6,
   name: "MacBook Air",
   title: "轻薄便携，无所不能",
-  image: "/images/mac/compare_mba.png",
-  carouselImages: [
-    "/images/mac/carousel_1.webp",
-    "/images/mac/carousel_2.webp",
-  ],
+  image: "images/mac/compare_mba.png",
+  carouselImages: ["images/mac/carousel_1.webp", "images/mac/carousel_2.webp"],
   startingPrice: 7999,
   installments: 333,
   models: [
@@ -252,11 +249,8 @@ export const MacBook_Pro_16 = {
   id: 4,
   name: "MacBook Pro 16",
   title: "动力，来势汹汹",
-  image: "/images/mac/compare_mbp.png",
-  carouselImages: [
-    "/images/mac/carousel_1.webp",
-    "/images/mac/carousel_2.webp",
-  ],
+  image: "images/mac/compare_mbp.png",
+  carouselImages: ["images/mac/carousel_1.webp", "images/mac/carousel_2.webp"],
   startingPrice: 19999,
   installments: 833,
   models: [
@@ -284,11 +278,8 @@ export const iMac = {
   id: 5,
   name: "iMac",
   title: "色彩斑斓，无所不能",
-  image: "/images/mac/compare_imac.png",
-  carouselImages: [
-    "/images/mac/carousel_1.webp",
-    "/images/mac/carousel_2.webp",
-  ],
+  image: "images/mac/compare_imac.png",
+  carouselImages: ["images/mac/carousel_1.webp", "images/mac/carousel_2.webp"],
   startingPrice: 7999,
   installments: 333,
   models: [
