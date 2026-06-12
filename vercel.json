@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/api/:path(.*)",
-      "destination": "${import.meta.env.VITE_API_BASE}/api/:path"
+      "destination": "http://152.136.182.210:12231/api/:path"
     },
     {
       "source": "/(.*)",
