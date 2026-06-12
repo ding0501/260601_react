@@ -1,5 +1,15 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/proxy-img/:path(.*)",
+      "destination": "http://152.136.182.210:12231/:path"
+    },
+
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
