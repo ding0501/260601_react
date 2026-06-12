@@ -2,7 +2,7 @@
 export const getApiBaseUrl = () => {
   // 开发环境使用完整 URL
   if (import.meta.env.DEV) {
-    return import.meta.env.VITE_API_BASE_URL || "http://152.136.182.210:12231";
+    return import.meta.env.VITE_API_BASE_URL || "https://152.136.182.210:12231";
   }
   // 生产环境使用相对路径
   return "";
