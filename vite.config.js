@@ -25,6 +25,19 @@ export default defineConfig({
   ],
   server: {
     port: 3000,
+    // 添加代理配置 ↓↓↓
+    proxy: {
+      "/api": {
+        target: "http://152.136.182.210:12231",
+        changeOrigin: true,
+        secure: false,
+      },
+      "/images": {
+        target: "http://152.136.182.210:12231",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
   resolve: {
     alias: {

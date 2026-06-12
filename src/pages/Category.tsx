@@ -7,6 +7,7 @@ import TextHeader from "@/components/TextHeader";
 import ImageSlider from "@/components/ImageSlider";
 import CompareTable from "@/components/CompareTable";
 import useApiWithReducer from "@/hooks/useApiWithReducer";
+import { getApiUrl } from "@/utils/url";
 
 type CategoryParams = {
   category: string;
@@ -21,7 +22,7 @@ const Category = () => {
     data: productCategory,
     loading,
     error,
-  } = useApiWithReducer<CategoryType>(`/api/categories/${category}`);
+  } = useApiWithReducer<CategoryType>(getApiUrl(`/api/categories/${category}`));
 
   if (loading || !productCategory) {
     return <Skeleton />;
