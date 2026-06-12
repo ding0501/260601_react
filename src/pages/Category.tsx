@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useEffect } from "react-router-dom";
 import useApiWithReducer from "@/hooks/useApiWithReducer";
 import { Category as CategoryType } from "@/types/custom";
 import { Skeleton } from "@/components/Skeleton";
@@ -11,10 +11,12 @@ type CategoryParams = {
   category: string;
 };
 
-// ========== 新增：URL修复函数，干掉http://152.136.182.210:12231前缀 ==========
+// 清洗URL函数，打印调试前后值
 const fixAssetUrl = (url: string) => {
   const oldPrefix = "http://152.136.182.210:12231";
-  return url.replace(oldPrefix, "");
+  const resultUrl = url.replace(oldPrefix, "");
+  console.log("URL替换对比：", url, "→", resultUrl);
+  return resultUrl;
 };
 
 const Category = () => {
@@ -22,6 +24,7 @@ const Category = () => {
   if (category == null) {
     throw new Error("Category not found");
   }
+
   const {
     data: productCategory,
     loading,
@@ -34,27 +37,31 @@ const Category = () => {
     return <Skeleton />;
   }
 
-  // ========== 新增：批量把接口返回的所有图片/视频地址转成相对路径 ==========
+  // 批量清洗所有资源路径
   const fixedData = {
     ...productCategory,
-    // 修正视频地址
     videos: {
       regularSrc: fixAssetUrl(productCategory.videos.regularSrc),
       smallSrc: fixAssetUrl(productCategory.videos.smallSrc),
     },
-    // 修正轮播里每张特性图片
     features: productCategory.features.map((item) => ({
       ...item,
       img: fixAssetUrl(item.img),
     })),
-    // 修正对比表格里每个产品图
     products: productCategory.products.map((prod) => ({
       ...prod,
       image: fixAssetUrl(prod.image),
     })),
   };
 
-  // ========== 渲染全部用修复后的 fixedData，不再直接用原始productCategory ==========
+  // 挂载后打印最终传给子组件的地址，用来排查
+  useEffect(() => {
+    console.log("=== 最终传给子组件的干净路径 ===");
+    console.log("视频smallSrc：", fixedData.videos.smallSrc);
+    console.log("第一张特性图：", fixedData.features[0]?.img);
+    console.log("第一个产品图：", fixedData.products[0]?.image);
+  }, [fixedData]);
+
   return (
     <div className="min-h-screen">
       <TextHeader title={fixedData.title} subTitle={fixedData.subTitle} />
@@ -67,4 +74,5 @@ const Category = () => {
     </div>
   );
 };
+
 export default Category;
