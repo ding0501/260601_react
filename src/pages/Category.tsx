@@ -11,12 +11,20 @@ type CategoryParams = {
   category: string;
 };
 
-// 清洗URL函数，打印调试前后值
+// 强制清洗并转为全站HTTPS绝对路径
 const fixAssetUrl = (url: string) => {
-  const oldPrefix = "http://152.136.182.210:12231";
-  const resultUrl = url.replace(oldPrefix, "");
-  console.log("URL替换对比：", url, "→", resultUrl);
-  return resultUrl;
+  const httpPrefix = "http://152.136.182.210:12231";
+  const siteHttpsDomain = "https://ding123.website";
+
+  // 第一步移除后端http前缀
+  let path = url.replace(httpPrefix, "");
+  // 防止重复拼接域名
+  if (!path.startsWith(siteHttpsDomain)) {
+    path = `${siteHttpsDomain}${path}`;
+  }
+
+  console.log("URL转换记录：", url, "→", path);
+  return path;
 };
 
 const Category = () => {
@@ -37,7 +45,7 @@ const Category = () => {
     return <Skeleton />;
   }
 
-  // 批量清洗所有资源路径
+  // 深度清洗所有资源地址
   const fixedData = {
     ...productCategory,
     videos: {
@@ -54,12 +62,12 @@ const Category = () => {
     })),
   };
 
-  // 挂载后打印最终传给子组件的地址，用来排查
+  // 挂载打印最终传递给子组件的地址
   useEffect(() => {
-    console.log("=== 最终传给子组件的干净路径 ===");
-    console.log("视频smallSrc：", fixedData.videos.smallSrc);
-    console.log("第一张特性图：", fixedData.features[0]?.img);
-    console.log("第一个产品图：", fixedData.products[0]?.image);
+    console.log("===== 最终传给子组件的HTTPS地址 =====");
+    console.log("视频小地址：", fixedData.videos.smallSrc);
+    console.log("第一张轮播图：", fixedData.features[0]?.img);
+    console.log("第一个产品对比图：", fixedData.products[0]?.image);
   }, [fixedData]);
 
   return (
