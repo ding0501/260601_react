@@ -12,7 +12,7 @@ export const fetchSearchResults = createAsyncThunk<
   });
 
   const response = await fetch(
-    `${import.meta.env.VITE_API_BASE}/api/products?keyword=${encodeURIComponent(keyword)}`,
+    `/api/products?keyword=${encodeURIComponent(keyword)}`,
     { signal: controller.signal },
   );
   if (response.status == 404) {

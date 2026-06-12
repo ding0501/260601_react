@@ -3,13 +3,10 @@ export const loadProducts = async (
   signal?: AbortSignal,
 ) => {
   try {
-    const response = await fetch(
-      `${import.meta.env.VITE_API_BASE}/api/products/${productId}`,
-      {
-        method: "GET",
-        signal: signal ?? null,
-      },
-    );
+    const response = await fetch(`/api/products/${productId}`, {
+      method: "GET",
+      signal: signal ?? null,
+    });
     if (!response.ok) {
       throw new Error(
         `Error fetching product wirh ID ${productId}:${response.statusText}`,

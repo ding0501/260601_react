@@ -19,7 +19,7 @@ interface ShoppingCartProviderProps {
 
 const ShoppingCartProvider = ({ children }: ShoppingCartProviderProps) => {
   const { data: shoppingCartData, fetchData } = useApiData<ShoppingCart>(
-    "${import.meta.env.VITE_API_BASE}/api/ShoppingCart",
+    "/api/ShoppingCart",
     {
       autoFetch: false,
     },

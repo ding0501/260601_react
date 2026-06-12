@@ -11,12 +11,9 @@ import { CartItem } from "@/types/custom";
 import useApiData from "./useApiData";
 
 const useShoppingCartAction = (dispatch: Dispatch<CartAction>) => {
-  const { data, fetchData: callApi } = useApiData(
-    "${import.meta.env.VITE_API_BASE}/api/ShoppingCart/items",
-    {
-      autoFetch: false,
-    },
-  );
+  const { data, fetchData: callApi } = useApiData("/api/ShoppingCart/items", {
+    autoFetch: false,
+  });
 
   const jwt = localStorage.getItem("token");
   return {
