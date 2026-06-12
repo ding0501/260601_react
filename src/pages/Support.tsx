@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/Skeleton";
 import { SupportData } from "../types/custom";
 import useApiData from "@/hooks/useApiData";
+import { getApiUrl } from "@/utils/url";
 
 const Support = () => {
+  // 使用 getApiUrl 函数，不要硬编码 HTTP 地址
   const { data, loading, error } = useApiData<SupportData>(
-    "http://152.136.182.210:12231/api/information/support",
+    getApiUrl("/api/information/support"),
   );
 
   if (loading) {
@@ -15,10 +17,11 @@ const Support = () => {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center text-red-500">
-        <p>加载数据失败：{error}</p>
+        <p>加载数据失败：{error.message || error}</p>
       </div>
     );
   }
+
   return (
     <div className="min-h-screen text-apple-text dark:text-apple-text-dark">
       <div
