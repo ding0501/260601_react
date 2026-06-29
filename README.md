@@ -1,16 +1,44 @@
-# React + Vite
+# 🍎 Black Apple
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Apple 风格设计的电商购物网站 — React + TypeScript 练手项目
 
-Currently, two official plugins are available:
+🔗 **在线演示**：[https://ding123.website](https://ding123.website)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ 功能清单
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [x] 商品列表展示（Apple 风格 UI）
+- [x] 购物车（增删改、数量调整、总价计算）
+- [x] 用户登录/登出（模拟）
+- [x] 关键词搜索商品
+- [x] 中英文切换（i18n）
+- [x] 暗色/亮色模式切换
+- [x] 响应式设计（PC + iPad+手机适配）
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ 技术栈
+
+| 类别 | 技术 |
+|------|------|
+| 框架 | React 18 + TypeScript |
+| 构建工具 | Vite |
+| 路由 | React Router v6 |
+| 国际化 | i18next |
+| 部署 | Vercel |
+
+---
+
+## 🚀 本地启动
+
+```bash
+npm install
+npm run dev
+
+## 📱 截图
+
+
+
+
+（特别说明：学习/练习项目，与 Apple 无关联）
