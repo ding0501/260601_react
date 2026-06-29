@@ -14,7 +14,7 @@
 - [x] 关键词搜索商品
 - [x] 中英文切换（i18n）
 - [x] 暗色/亮色模式切换
-- [x] 响应式设计（PC + 手机适配）
+- [x] 响应式设计（PC + iPad+手机适配）
 
 ---
 
@@ -25,7 +25,6 @@
 | 框架 | React 18 + TypeScript |
 | 构建工具 | Vite |
 | 路由 | React Router v6 |
-| 状态管理 | Zustand |
 | 国际化 | i18next |
 | 部署 | Vercel |
 
@@ -36,3 +35,4 @@
 ```bash
 npm install
 npm run dev
+（特别说明：学习/练习项目，与 Apple 无关联）
