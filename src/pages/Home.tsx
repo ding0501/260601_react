@@ -25,6 +25,7 @@ function Home() {
   return (
     <div>
       <ImageHero />
+
       <ProductHero
         product={SUGGESTED_PROUDCT.product}
         imageUrl={SUGGESTED_PROUDCT.imageSrc}
