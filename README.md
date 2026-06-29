@@ -35,4 +35,8 @@
 ```bash
 npm install
 npm run dev
-（特别说明：学习/练习项目，与 Apple 无关联）
+
+
+## 特别说明
+学习/练习项目，与 Apple 无关联
+
