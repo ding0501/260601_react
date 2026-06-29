@@ -37,7 +37,7 @@ npm install
 npm run dev
 
 ## 📱 截图
-<img width="1919" height="941" alt="屏幕截图 2026-06-29 125819" src="https://github.com/user-attachments/assets/7dcf6e42-0ea0-49b7-8f81-f75538244213" />
+
 
 
 
