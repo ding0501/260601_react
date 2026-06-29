@@ -36,6 +36,9 @@
 npm install
 npm run dev
 
+## 📱 截图
+<img width="1919" height="941" alt="屏幕截图 2026-06-29 125819" src="https://github.com/user-attachments/assets/31b5e401-b273-450c-a263-3a9633b114bc" />
+
 
 ## 特别说明
 学习/练习项目，与 Apple 无关联
