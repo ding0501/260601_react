@@ -202,7 +202,7 @@ const Header = () => {
         )}
 
         <button className="md:hidden" onClick={() => setIsOpen(true)}>
-          <AiOutlineMenu size={24} />
+          <AiOutlineMenu size={24} className="dark:text-apple-text-dark" />
         </button>
       </div>
 
