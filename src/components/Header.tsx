@@ -146,14 +146,14 @@ const Header = () => {
        "
       >
         <button onClick={() => setIsSearchEnable((prev) => !prev)}>
-          <AiOutlineSearch size={24} />
+          <AiOutlineSearch size={24} className="dark:text-apple-text-dark" />
         </button>
         <DarkToggle />
         <button onClick={handleLanguageChange}>
-          <IoLanguageOutline size={24} />
+          <IoLanguageOutline size={24} className="dark:text-apple-text-dark" />
         </button>
         <button onClick={() => navigate("/cart")} className="relative">
-          <AiOutlineShopping size={24} />
+          <AiOutlineShopping size={24} className="dark:text-apple-text-dark" />
           <AnimatePresence>
             {cartItems.length > 0 && (
               <motion.span
