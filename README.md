@@ -37,7 +37,8 @@ npm install
 npm run dev
 
 ## 📱 截图
-
+![PC端](./public/images/PC端截图.png)
+![手机端](./public/images/手机端截图.png) 
 
 
 
