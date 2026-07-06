@@ -65,7 +65,87 @@ export const NEW_ARRIVALS_LIST = [
   },
 ];
 
+
 export const NEW_ARRIVALS_LIST_2 = [];
+export const NEW_ARRIVALS_LIST_3 = [
+  {
+    title: "三视图与轴测图",
+    image: "/documents/AutoCAD/三视图与轴测图.png",
+    document:"/documents/AutoCAD/三视图与轴测图.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "一层平面图",
+    image: "/documents/AutoCAD/一层平面图.png",
+    document:"/documents/AutoCAD/一层平面图.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "创意拱门",
+    image: "/documents/AutoCAD/创意拱门.png",
+    document:"/documents/AutoCAD/创意拱门.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "平面标注1",
+    image: "/documents/AutoCAD/平面标注1.png",
+    document:"/documents/AutoCAD/平面标注1.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "平面标注2",
+    image: "/documents/AutoCAD/平面标注2.png",
+    document:"/documents/AutoCAD/平面标注2.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "建筑平面图",
+    image: "/documents/AutoCAD/建筑平面图.png",
+    document:"/documents/AutoCAD/建筑平面图.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "建筑平面图1",
+    image: "/documents/AutoCAD/建筑平面图1.png",
+    document:"/documents/AutoCAD/建筑平面图1.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "练习图纸1",
+    image: "/documents/AutoCAD/练习图纸1.png",
+    document:"/documents/AutoCAD/练习图纸1.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "练习图纸2",
+    image: "/documents/AutoCAD/练习图纸2.png",
+    document:"/documents/AutoCAD/练习图纸2.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "练习图纸3",
+    image: "/documents/AutoCAD/练习图纸3.png",
+    document:"/documents/AutoCAD/练习图纸3.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "练习图纸4",
+    image: "/documents/AutoCAD/练习图纸4.png",
+    document:"/documents/AutoCAD/练习图纸4.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+];
 
 export const OFFER_LIST = [
   {

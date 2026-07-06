@@ -2,7 +2,7 @@ export { default as Home } from "./Home";
 export { default as About } from "./About";
 export { default as Computers } from "./Computers";
 export { default as IPad } from "./Ipad";
-export { default as Entertainment } from "./Entertainment";
+export { default as AutoCAD } from "./AutoCAD";
 export { default as Support } from "./Support";
 export { default as SmartHome } from "./SmartHome";
 export { default as Phones } from "./Phones";

@@ -5,7 +5,7 @@ import UserLayout from "@/layouts/UserLayout";
 import { createBrowserRouter, LoaderFunctionArgs } from "react-router-dom";
 import {
   About,
-  Entertainment,
+  AutoCAD,
   Support,
   Phones,
   SignIn,
@@ -43,8 +43,8 @@ const router = createBrowserRouter([
       { path: "about", element: <About />, errorElement: <ErrorPage /> },
 
       {
-        path: "entertainment",
-        element: <Entertainment />,
+        path: "AutoCAD",
+        element: <AutoCAD />,
         errorElement: <ErrorPage />,
       },
       { path: "support", element: <Support />, errorElement: <ErrorPage /> }, // 错误页面

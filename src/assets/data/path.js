@@ -21,9 +21,9 @@ export const SHOPPING_PAGES = [
     path: "categories/ipad",
   },
   {
-    id: "entertainment",
-    title: "娱乐",
-    path: "/entertainment",
+    id: "AutoCAD",
+    title: "AutoCAD作品集",
+    path: "/AutoCAD",
   },
   {
     id: "support",
