@@ -27,7 +27,7 @@ export const SHOPPING_PAGES = [
   },
   {
     id: "support",
-    title: "技术支持",
+    title: "个人简历",
     path: "/support",
   },
 ];

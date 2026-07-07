@@ -69,23 +69,51 @@ export const NEW_ARRIVALS_LIST = [
 export const NEW_ARRIVALS_LIST_2 = [];
 export const NEW_ARRIVALS_LIST_3 = [
   {
+    title: "期待的OFFER",
+    image: "/documents/AutoCAD/期待的OFFER.png",
+    document:"/documents/AutoCAD/期待的OFFER.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "带盖的包装盒",
+    image: "/documents/AutoCAD/带盖的包装盒.png",
+    document:"/documents/AutoCAD/带盖的包装盒.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "抽拉式礼盒",
+    image: "/documents/AutoCAD/抽拉式礼盒.png",
+    document:"/documents/AutoCAD/抽拉式礼盒.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "方便手抬包装盒",
+    image: "/documents/AutoCAD/方便手抬包装盒.png",
+    document:"/documents/AutoCAD/方便手抬包装盒.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "手拎式包装盒",
+    image: "/documents/AutoCAD/手拎式包装盒.png",
+    document:"/documents/AutoCAD/手拎式包装盒.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "包装盒",
+    image: "/documents/AutoCAD/包装盒.png",
+    document:"/documents/AutoCAD/包装盒.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
     title: "三视图与轴测图",
     image: "/documents/AutoCAD/三视图与轴测图.png",
     document:"/documents/AutoCAD/三视图与轴测图.pdf",
-    textColor: "black",
-    soldOut: false,
-  },
-  {
-    title: "一层平面图",
-    image: "/documents/AutoCAD/一层平面图.png",
-    document:"/documents/AutoCAD/一层平面图.pdf",
-    textColor: "black",
-    soldOut: false,
-  },
-  {
-    title: "创意拱门",
-    image: "/documents/AutoCAD/创意拱门.png",
-    document:"/documents/AutoCAD/创意拱门.pdf",
     textColor: "black",
     soldOut: false,
   },
@@ -103,20 +131,7 @@ export const NEW_ARRIVALS_LIST_3 = [
     textColor: "black",
     soldOut: false,
   },
-  {
-    title: "建筑平面图",
-    image: "/documents/AutoCAD/建筑平面图.png",
-    document:"/documents/AutoCAD/建筑平面图.pdf",
-    textColor: "black",
-    soldOut: false,
-  },
-  {
-    title: "建筑平面图1",
-    image: "/documents/AutoCAD/建筑平面图1.png",
-    document:"/documents/AutoCAD/建筑平面图1.pdf",
-    textColor: "black",
-    soldOut: false,
-  },
+  
   {
     title: "练习图纸1",
     image: "/documents/AutoCAD/练习图纸1.png",
@@ -145,6 +160,37 @@ export const NEW_ARRIVALS_LIST_3 = [
     textColor: "black",
     soldOut: false,
   },
+  {
+    title: "建筑平面图1",
+    image: "/documents/AutoCAD/建筑平面图1.png",
+    document:"/documents/AutoCAD/建筑平面图1.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "建筑平面图",
+    image: "/documents/AutoCAD/建筑平面图.png",
+    document:"/documents/AutoCAD/建筑平面图.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "一层平面图",
+    image: "/documents/AutoCAD/一层平面图.png",
+    document:"/documents/AutoCAD/一层平面图.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  
+   {
+    title: "创意拱门",
+    image: "/documents/AutoCAD/创意拱门.png",
+    document:"/documents/AutoCAD/创意拱门.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  
+  
 ];
 
 export const OFFER_LIST = [
