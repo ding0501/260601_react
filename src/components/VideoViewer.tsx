@@ -183,19 +183,33 @@ function VideoViewer({
     setImageError(true);
   };
 
+  // ===== 修改开始：方案1 - 路径处理函数 =====
   const getVideoPath = (url: string) => {
-    if (url.startsWith('/') || url.startsWith('http')) {
+    // 如果是以 http 开头，直接返回（外部链接）
+    if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     }
-    return `./${url}`;
+    // 如果是以 / 开头，直接返回（已经是绝对路径）
+    if (url.startsWith('/')) {
+      return url;
+    }
+    // 否则，添加 / 前缀（因为文件在 public 根目录）
+    return `/${url}`;
   };
 
   const getImagePath = (url: string) => {
-    if (url.startsWith('/') || url.startsWith('http')) {
+    // 如果是以 http 开头，直接返回（外部链接）
+    if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     }
-    return `./${url}`;
+    // 如果是以 / 开头，直接返回（已经是绝对路径）
+    if (url.startsWith('/')) {
+      return url;
+    }
+    // 否则，添加 / 前缀（因为文件在 public 根目录）
+    return `/${url}`;
   };
+  // ===== 修改结束 =====
 
   const handleReset = () => {
     setScale(1);
