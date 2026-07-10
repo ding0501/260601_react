@@ -183,33 +183,60 @@ function VideoViewer({
     setImageError(true);
   };
 
-  // ===== 修改开始：方案1 - 路径处理函数 =====
+  // 路径处理函数 - 支持中文文件名
   const getVideoPath = (url: string) => {
-    // 如果是以 http 开头，直接返回（外部链接）
+    // 如果是完整 URL，直接返回
     if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     }
-    // 如果是以 / 开头，直接返回（已经是绝对路径）
-    if (url.startsWith('/')) {
-      return url;
+    
+    // 确保路径以 / 开头
+    let path = url.startsWith('/') ? url : `/${url}`;
+    
+    // 对路径进行 URL 编码（处理中文）
+    try {
+      const parts = path.split('/');
+      const encodedParts = parts.map(part => {
+        // 如果包含中文，进行编码
+        if (/[\u4e00-\u9fa5]/.test(part)) {
+          return encodeURIComponent(part);
+        }
+        return part;
+      });
+      path = encodedParts.join('/');
+    } catch (e) {
+      console.warn('路径编码失败，使用原始路径:', e);
     }
-    // 否则，添加 / 前缀（因为文件在 public 根目录）
-    return `/${url}`;
+    
+    return path;
   };
 
   const getImagePath = (url: string) => {
-    // 如果是以 http 开头，直接返回（外部链接）
+    // 如果是完整 URL，直接返回
     if (url.startsWith('http://') || url.startsWith('https://')) {
       return url;
     }
-    // 如果是以 / 开头，直接返回（已经是绝对路径）
-    if (url.startsWith('/')) {
-      return url;
+    
+    // 确保路径以 / 开头
+    let path = url.startsWith('/') ? url : `/${url}`;
+    
+    // 对路径进行 URL 编码（处理中文）
+    try {
+      const parts = path.split('/');
+      const encodedParts = parts.map(part => {
+        // 如果包含中文，进行编码
+        if (/[\u4e00-\u9fa5]/.test(part)) {
+          return encodeURIComponent(part);
+        }
+        return part;
+      });
+      path = encodedParts.join('/');
+    } catch (e) {
+      console.warn('路径编码失败，使用原始路径:', e);
     }
-    // 否则，添加 / 前缀（因为文件在 public 根目录）
-    return `/${url}`;
+    
+    return path;
   };
-  // ===== 修改结束 =====
 
   const handleReset = () => {
     setScale(1);
@@ -400,7 +427,6 @@ function VideoViewer({
                   onError={handleVideoError}
                   onTimeUpdate={handleTimeUpdate}
                   onLoadedMetadata={handleLoadedMetadata}
-                  poster="/images/video-poster.png"
                   playsInline
                   muted={isMuted}
                   loop
