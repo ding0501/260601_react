@@ -8,6 +8,7 @@ type VideoViewerProps = {
   textColor?: string;
   showBorder?: boolean;
   autoPlay?: boolean;
+  muted?: boolean;
 };
 
 function VideoViewer({ 
@@ -17,7 +18,8 @@ function VideoViewer({
   imageUrl = "", 
   textColor = "black", 
   showBorder = true,
-  autoPlay = true
+  autoPlay = true,
+  muted = true
 }: VideoViewerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
@@ -33,7 +35,7 @@ function VideoViewer({
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(muted);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const fullscreenVideoRef = useRef<HTMLVideoElement>(null);
@@ -78,9 +80,12 @@ function VideoViewer({
     };
   }, [isPdfViewerOpen, isFullscreen, isImageViewerOpen]);
 
-  // 自动播放视频（页面加载时）
+  // 自动播放视频（静音自动播放）
   useEffect(() => {
     if (autoPlay && videoRef.current && !hasUserInteracted) {
+      // 确保视频是静音状态
+      videoRef.current.muted = true;
+      
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise
@@ -88,7 +93,13 @@ function VideoViewer({
             setIsPlaying(true);
           })
           .catch(() => {
-            setIsPlaying(false);
+            // 如果自动播放被阻止，再次尝试静音播放
+            if (videoRef.current) {
+              videoRef.current.muted = true;
+              videoRef.current.play().catch(() => {
+                setIsPlaying(false);
+              });
+            }
           });
       }
     }
@@ -111,6 +122,7 @@ function VideoViewer({
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.volume = isMuted ? 0 : volume;
+      videoRef.current.muted = isMuted;
     }
   }, [volume, isMuted]);
 
@@ -151,6 +163,7 @@ function VideoViewer({
       setTimeout(() => {
         if (fullscreenVideoRef.current) {
           fullscreenVideoRef.current.currentTime = videoRef.current?.currentTime || 0;
+          fullscreenVideoRef.current.muted = isMuted;
           fullscreenVideoRef.current.play().catch(() => {});
         }
       }, 100);
@@ -250,6 +263,7 @@ function VideoViewer({
 
   const handlePlayPause = () => {
     setHasUserInteracted(true);
+    // 用户交互后，如果当前是静音状态，保持静音（用户可以通过音量按钮取消静音）
     setIsPlaying(!isPlaying);
   };
 
@@ -288,6 +302,7 @@ function VideoViewer({
 
   const handleVideoClick = () => {
     setHasUserInteracted(true);
+    // 如果视频是静音的，点击时不要自动取消静音（避免用户意外听到声音）
     setIsPlaying(!isPlaying);
   };
 
@@ -369,7 +384,7 @@ function VideoViewer({
             {title}
           </div>
           <div className="text-sm md:text-base text-gray-600 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 px-4 py-2 rounded-full backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 flex-shrink-0">
-            🎬 点击视频切换播放/暂停
+            {isMuted ? '🔇 静音播放' : '🎬 点击视频切换播放/暂停'}
           </div>
         </div>
 
@@ -430,6 +445,7 @@ function VideoViewer({
                   playsInline
                   muted={isMuted}
                   loop
+                  autoPlay={autoPlay}
                 />
               )}
               
@@ -505,7 +521,7 @@ function VideoViewer({
               )}
               
               <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                {isPlaying ? '▶ 播放中' : '⏸ 已暂停'}
+                {isPlaying ? (isMuted ? '🔇 静音播放中' : '▶ 播放中') : '⏸ 已暂停'}
               </div>
             </div>
 
