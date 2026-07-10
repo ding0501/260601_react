@@ -224,45 +224,54 @@ function DocumentViewer({ title, imageUrl, pdfUrl, textColor = "black", showBord
                 点击图片可全屏查看、缩放、旋转
               </div>
 
-              {/* 按钮组 - 居中显示 */}
-              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 flex-wrap items-center">
+              {/* 按钮组 - 修改后的按钮样式 */}
+              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 flex-wrap items-center">
+                {/* PDF查看按钮 - 渐变蓝色 */}
                 <button
                   className="
                     inline-flex items-center justify-center gap-2
-                    px-4 py-2.5
-                    border border-apple-blue
-                    bg-transparent
-                    rounded-md
-                    hover:bg-apple-blue
-                    hover:text-apple-gray-100
-                    transition-colors duration-200
+                    px-6 py-3
+                    bg-gradient-to-r from-blue-500 to-blue-600
+                    text-white
+                    rounded-xl
+                    hover:from-blue-600 hover:to-blue-700
+                    hover:shadow-lg hover:shadow-blue-500/30
+                    active:scale-95
+                    transition-all duration-300
+                    font-semibold
                     text-base
                     whitespace-nowrap
+                    border-0
                   "
                   onClick={handleViewPDF}
                 >
-                  <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <span>查看PDF</span>
                 </button>
+
+                {/* 全屏按钮 - 渐变紫色 */}
                 <button
                   className="
                     inline-flex items-center justify-center gap-2
-                    px-4 py-2.5
-                    border border-apple-blue
-                    bg-transparent
-                    rounded-md
-                    hover:bg-apple-blue
-                    hover:text-apple-gray-100
-                    transition-colors duration-200
+                    px-6 py-3
+                    bg-gradient-to-r from-purple-500 to-purple-600
+                    text-white
+                    rounded-xl
+                    hover:from-purple-600 hover:to-purple-700
+                    hover:shadow-lg hover:shadow-purple-500/30
+                    active:scale-95
+                    transition-all duration-300
+                    font-semibold
                     text-base
                     whitespace-nowrap
+                    border-0
                   "
                   onClick={handleToggleFullscreen}
                 >
-                  <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
+                  <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isFullscreen ? "M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" : "M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"} />
                   </svg>
                   <span>{isFullscreen ? "退出全屏" : "全屏看图片"}</span>
                 </button>

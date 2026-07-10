@@ -22,13 +22,18 @@ export const SHOPPING_PAGES = [
   },
   {
     id: "AutoCAD",
-    title: "AutoCAD作品集",
+    title: "AutoCAD展示区",
     path: "/AutoCAD",
   },
   {
-    id: "support",
-    title: "个人简历",
-    path: "/support",
+    id: "SolidWorks",
+    title: "SolidWorks展示区",
+    path: "/SolidWorks",
+  },
+  {
+    id: "Contact",
+    title: "联系我们",
+    path: "/Contact",
   },
 ];
 

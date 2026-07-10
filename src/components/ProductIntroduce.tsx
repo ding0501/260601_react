@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 
-interface ProductIntroProps {
+interface ProductIntroduceProps {
   children?: ReactNode;
 }
 
-const ProductIntro = ({ children }: ProductIntroProps) => {
+const ProductIntroduce = ({ children }: ProductIntroduceProps) => {
   return (
     <div className="px-4 py-6">
       {/* 卡片容器 - 磨玻璃效果 */}
@@ -38,7 +38,7 @@ const ProductIntro = ({ children }: ProductIntroProps) => {
                   animation: 'gradient 3s ease-in-out infinite'
                 }}
               >
-                欢迎来到我的AutoCAD作品展示页
+                欢迎来到我的SolidWorks作品展示页
               </h1>
             </div>
             
@@ -49,7 +49,7 @@ const ProductIntro = ({ children }: ProductIntroProps) => {
                 animation: 'fadeInUp 0.8s ease-out forwards'
               }}
             >
-              我在寻找新的工作机会。下面这些AutoCAD图纸都是我一笔一画独立完成的，每一张都严格按照工程制图规范来画。
+              我在寻找新的工作机会。从零部件装配图到三维模型图，这些三维模型由我独立完成，全流程展现出我对SolidWorks从抽象构想到实体呈现的成熟驾驭力。
             </p>
             <p 
               className="text-slate-600 text-sm md:text-base mt-3 leading-relaxed max-w-full mx-auto px-2"
@@ -59,7 +59,7 @@ const ProductIntro = ({ children }: ProductIntroProps) => {
                 opacity: 0
               }}
             >
-              这些作品不仅展示了我对CAD软件的熟练掌握，更体现了我将三维构思精准转化为二维工程图纸的空间想象力。
+              这些作品系统展示了我对SolidWorks的驾驭能力，核心在于能将抽象零件转化为可见的三维模型。
             </p>
           </div>
           
@@ -96,4 +96,4 @@ const ProductIntro = ({ children }: ProductIntroProps) => {
   );
 };
 
-export default ProductIntro;
+export default ProductIntroduce;

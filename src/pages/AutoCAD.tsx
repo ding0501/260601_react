@@ -1,5 +1,5 @@
 import DocumentViewer from "../components/DocumentViewer";
-import { NEW_ARRIVALS_LIST_3 } from "../assets/data";
+import { NEW_ARRIVALS_LIST_3 } from "../assets/data/index";
 import ProductIntro from "../components/ProductIntro";
 // 删除这一行：import ProductList from "@components/ProductList";
 // 如果不需要 useTranslation，也可以删除这行

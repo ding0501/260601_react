@@ -21,7 +21,7 @@ const UserLayout = () => {
     { id: "dashboard", label: "概览", icon: AiOutlineHome },
     { id: "orders", label: "订单管理", icon: AiOutlineFolder },
     { id: "shoppingCart", label: "购物车管理", icon: AiOutlineShoppingCart },
-    { id: "support", label: "个人简历", icon: AiOutlineUsergroupDelete },
+    { id: "support", label: "SolidWorks展示区", icon: AiOutlineUsergroupDelete },
     { id: "settings", label: "设置", icon: AiOutlineSetting },
   ];
 

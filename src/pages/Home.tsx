@@ -8,6 +8,7 @@ import withBanner from "../HOCs/withBanner";
 import ImageHero from "../components/ImageHero";
 import { SUGGESTED_PROUDCT } from "../assets/data";
 import ProductHero from "../components/ProductHero";
+import Disclaimer from "../components/Disclaimer";
 import { useTranslation } from "react-i18next";
 
 const NewArrivalWithSoldOutCheck = withSoldOut((props: NewArrivalProps) => {
@@ -25,52 +26,7 @@ function Home() {
   return (
     <div>
       <ImageHero />
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 py-8 md:px-12 md:py-10">
-  <div className="max-w-5xl w-full">
-    <div className="relative inline-block w-full">
-      {/* 添加边框和背景的容器 */}
-      <div className="
-        w-full 
-        rounded-2xl 
-        border-2 
-        border-cyan-400/40 
-        bg-gradient-to-br 
-        from-slate-900/90 
-        via-slate-800/80 
-        to-slate-900/90 
-        backdrop-blur-sm 
-        p-6 
-        md:p-10 
-        shadow-2xl 
-        shadow-cyan-500/20 
-        hover:shadow-cyan-500/40 
-        transition-shadow 
-        duration-300
-      ">
-        <h1 className="
-          relative 
-          text-2xl 
-          md:text-4xl 
-          font-bold 
-          leading-relaxed 
-          bg-gradient-to-r 
-          from-cyan-400 
-          via-blue-500 
-          to-purple-600 
-          bg-clip-text 
-          text-transparent
-          drop-shadow-lg
-        "
-        style={{
-          backgroundSize: '200% auto',
-          animation: 'gradient 3s ease-in-out infinite'
-        }}>
-          此网页是个人练习前端的一个练习项目，与Apple无关联。
-        </h1>
-      </div>
-    </div>
-  </div>
-</div>
+      <Disclaimer/>
       
        
       <ProductHero

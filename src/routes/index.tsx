@@ -6,8 +6,9 @@ import { createBrowserRouter, LoaderFunctionArgs } from "react-router-dom";
 import {
   About,
   AutoCAD,
-  Support,
+  SolidWorks,
   Phones,
+  Contact,
   SignIn,
   Register,
   Home,
@@ -47,7 +48,12 @@ const router = createBrowserRouter([
         element: <AutoCAD />,
         errorElement: <ErrorPage />,
       },
-      { path: "support", element: <Support />, errorElement: <ErrorPage /> }, // 错误页面
+      { path: "SolidWorks", element: <SolidWorks />, errorElement: <ErrorPage /> }, // 错误页面
+      {
+        path: "Contact",
+        element: <Contact />,
+        errorElement: <ErrorPage />,
+      },
       {
         path: "product-detail/:id", //  product-detail/123
         element: <ProductDetail />,

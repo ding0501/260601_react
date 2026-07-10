@@ -130,7 +130,7 @@ export default function handler(req, res) {
 
   // 客服支持
   if (path === "/api/information/support") {
-    return res.status(200).json(getSupport());
+    return res.status(200).json(getsupport());
   }
 
   // 404 - 未找到
@@ -368,7 +368,7 @@ function rejectOrder(id, req, res) {
   return res.status(404).json({ error: "订单不存在" });
 }
 
-function getSupport() {
+function getsupport() {
   return {
     phone: "400-666-8800",
     email: "support@blackapple.com",
