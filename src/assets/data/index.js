@@ -127,6 +127,13 @@ export const NEW_ARRIVALS_LIST_3 = [
   },
    {
     title: "",
+    image: "/documents/AutoCAD/练习图纸5.png",
+    document:"/documents/AutoCAD/练习图纸5.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "",
     image: "/documents/AutoCAD/带盖的包装盒.png",
     document:"/documents/AutoCAD/带盖的包装盒.pdf",
     textColor: "black",
@@ -185,7 +192,54 @@ export const NEW_ARRIVALS_LIST_3 = [
   
 ];
 export const NEW_ARRIVALS_LIST_4 = [
-   
+    {
+    title: "",
+    image: "/documents/SolidWorks/零件009.png",
+    video: "/documents/SolidWorks/零件009.mp4",
+    document:"/documents/SolidWorks/零件009.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "",
+    image: "/documents/SolidWorks/零件008.png",
+    video: "/documents/SolidWorks/零件008.mp4",
+    document:"/documents/SolidWorks/零件008.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "",
+    image: "/documents/SolidWorks/零件007.png",
+    video: "/documents/SolidWorks/零件007.mp4",
+    document:"/documents/SolidWorks/零件007.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "",
+    image: "/documents/SolidWorks/零件006.png",
+    video: "/documents/SolidWorks/零件006.mp4",
+    document:"/documents/SolidWorks/零件006.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "",
+    image: "/documents/SolidWorks/零件005.png",
+    video: "/documents/SolidWorks/零件005.mp4",
+    document:"/documents/SolidWorks/零件005.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+   {
+    title: "",
+    image: "/documents/SolidWorks/零件004.png",
+    video: "/documents/SolidWorks/零件004.mp4",
+    document:"/documents/SolidWorks/零件004.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
   {
     title: "",
     image: "/documents/SolidWorks/零件003.png",
