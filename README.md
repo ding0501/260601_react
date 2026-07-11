@@ -1,6 +1,6 @@
 # 🍎 Black Apple
 
-> Apple 风格设计的电商购物网站 — React + TypeScript 练手项目
+> 一个负责AutoCAD、SolidWorks等图片文件展示的网站.React + Typescript 练手项目
 
 🔗 **在线演示**：[https://ding123.website](https://ding123.website)
 
