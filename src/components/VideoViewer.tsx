@@ -384,7 +384,7 @@ function VideoViewer({
             {title}
           </div>
           <div className="text-sm md:text-base text-gray-600 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 px-4 py-2 rounded-full backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 flex-shrink-0">
-            {isMuted ? '🔇 静音播放' : '🎬 点击视频切换播放/暂停'}
+            🎬 点击视频切换播放/暂停&nbsp;&nbsp;<span className="text-red-600 dark:text-red-400">默认是静音播放</span>
           </div>
         </div>
 
@@ -521,56 +521,12 @@ function VideoViewer({
               )}
               
               <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                {isPlaying ? (isMuted ? '🔇 静音播放中' : '▶ 播放中') : '⏸ 已暂停'}
+                {isPlaying ? '▶ 播放中' : '⏸ 已暂停'}
               </div>
             </div>
 
             {/* PC端和iPad端按钮 - 放在视频下方，在移动端隐藏 */}
             <div className="hidden lg:flex flex-wrap items-center justify-center gap-3 mt-4 w-full max-w-[600px] lg:max-w-[700px]">
-              <button
-                className="
-                  inline-flex items-center justify-center gap-2
-                  px-5 py-2.5
-                  border border-green-500/50
-                  bg-gradient-to-r from-green-50 to-green-100/50 dark:from-green-900/30 dark:to-green-800/30
-                  rounded-md
-                  hover:bg-gradient-to-r hover:from-green-100 hover:to-green-200/50 dark:hover:from-green-800/50 dark:hover:to-green-700/50
-                  transition-all duration-200
-                  text-sm md:text-base lg:text-lg
-                  whitespace-nowrap
-                  text-green-700 dark:text-green-300
-                  shadow-sm hover:shadow
-                "
-                onClick={handleToggleFullscreen}
-              >
-                <svg className="w-4 h-4 md:w-5 md:h-5 lg:w-5 lg:h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
-                </svg>
-                <span>{isFullscreen ? "退出全屏" : "全屏看视频"}</span>
-              </button>
-              
-              <button
-                className="
-                  inline-flex items-center justify-center gap-2
-                  px-5 py-2.5
-                  border border-blue-500/50
-                  bg-gradient-to-r from-blue-50 to-blue-100/50 dark:from-blue-900/30 dark:to-blue-800/30
-                  rounded-md
-                  hover:bg-gradient-to-r hover:from-blue-100 hover:to-blue-200/50 dark:hover:from-blue-800/50 dark:hover:to-blue-700/50
-                  transition-all duration-200
-                  text-sm md:text-base lg:text-lg
-                  whitespace-nowrap
-                  text-blue-700 dark:text-blue-300
-                  shadow-sm hover:shadow
-                "
-                onClick={handleViewPDF}
-              >
-                <svg className="w-4 h-4 md:w-5 md:h-5 lg:w-5 lg:h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                <span>查看PDF</span>
-              </button>
-              
               {imageUrl && !imageError && (
                 <button
                   className="
@@ -594,6 +550,50 @@ function VideoViewer({
                   <span>查看图片</span>
                 </button>
               )}
+              
+              <button
+                className="
+                  inline-flex items-center justify-center gap-2
+                  px-5 py-2.5
+                  border border-blue-500/50
+                  bg-gradient-to-r from-blue-50 to-blue-100/50 dark:from-blue-900/30 dark:to-blue-800/30
+                  rounded-md
+                  hover:bg-gradient-to-r hover:from-blue-100 hover:to-blue-200/50 dark:hover:from-blue-800/50 dark:hover:to-blue-700/50
+                  transition-all duration-200
+                  text-sm md:text-base lg:text-lg
+                  whitespace-nowrap
+                  text-blue-700 dark:text-blue-300
+                  shadow-sm hover:shadow
+                "
+                onClick={handleViewPDF}
+              >
+                <svg className="w-4 h-4 md:w-5 md:h-5 lg:w-5 lg:h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span>查看PDF</span>
+              </button>
+              
+              <button
+                className="
+                  inline-flex items-center justify-center gap-2
+                  px-5 py-2.5
+                  border border-green-500/50
+                  bg-gradient-to-r from-green-50 to-green-100/50 dark:from-green-900/30 dark:to-green-800/30
+                  rounded-md
+                  hover:bg-gradient-to-r hover:from-green-100 hover:to-green-200/50 dark:hover:from-green-800/50 dark:hover:to-green-700/50
+                  transition-all duration-200
+                  text-sm md:text-base lg:text-lg
+                  whitespace-nowrap
+                  text-green-700 dark:text-green-300
+                  shadow-sm hover:shadow
+                "
+                onClick={handleToggleFullscreen}
+              >
+                <svg className="w-4 h-4 md:w-5 md:h-5 lg:w-5 lg:h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5" />
+                </svg>
+                <span>{isFullscreen ? "退出全屏" : "全屏看视频"}</span>
+              </button>
             </div>
           </div>
         </div>
