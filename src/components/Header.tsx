@@ -2,19 +2,12 @@ import Logo from "../assets/apple.svg?react";
 //不加 ?react 需要使用<img srv={Logo} alt="logo"/>
 import {
   AiOutlineMenu,
-  AiOutlineSearch,
-  AiOutlineShopping,
 } from "react-icons/ai";
 import { useState, useContext, useEffect, useRef } from "react";
 import DarkToggle from "./DarkToggle";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { SHOPPING_PAGES } from "../assets/data/path";
-import { ShoppingCartContext } from "@/contexts/shoppingCart";
-import { AnimatePresence, motion, spring } from "framer-motion";
-import { IoLanguageOutline } from "react-icons/io5";
 import store, { RootState } from "../redux/store";
-import { languageSet, CultureCode } from "../redux/i18nReducer";
-import { setCulture } from "../redux/i18nSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AUTH_PAGES } from "../assets/data/path";
 import { parseJwt } from "../helpers/jwtHelper";
@@ -23,13 +16,7 @@ import { logout } from "../redux/userSlice";
 const Header = () => {
   const [username, setUsername] = useState<string | null>(null);
   const { token } = useSelector((state: RootState) => state.user);
-  const currentLanguage = useSelector<RootState, CultureCode>(
-    (state) => state.i18n.currentLanguage,
-  );
-  console.log("currentLanguage:", currentLanguage);
   const dispatch = useDispatch();
-
-  const { cartItems } = useContext(ShoppingCartContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchEnable, setIsSearchEnable] = useState(false);
@@ -56,14 +43,13 @@ const Header = () => {
     }
   }, [isSearchEnable]);
 
-  const handleLanguageChange = () => {
-    const currentIndex = languageSet.indexOf(currentLanguage);
-    console.log("currentIndex:", currentIndex);
-    const nextIndex = (currentIndex + 1) % languageSet.length;
-    const nextLanguage = languageSet[nextIndex];
-    dispatch(setCulture(nextLanguage));
-    console.log("Dispatched language change to:", nextLanguage);
-  };
+  //   const currentIndex = languageSet.indexOf(currentLanguage);
+  //   console.log("currentIndex:", currentIndex);
+  //   const nextIndex = (currentIndex + 1) % languageSet.length;
+  //   const nextLanguage = languageSet[nextIndex];
+  //   dispatch(setCulture(nextLanguage));
+  //   console.log("Dispatched language change to:", nextLanguage);
+  // };
 
   useEffect(() => {
     if (token) {
@@ -145,34 +131,8 @@ const Header = () => {
          gap-2 space-x-2
        "
       >
-        <button onClick={() => setIsSearchEnable((prev) => !prev)}>
-          <AiOutlineSearch size={24} className="dark:text-apple-text-dark" />
-        </button>
+      
         <DarkToggle />
-        <button onClick={handleLanguageChange}>
-          <IoLanguageOutline size={24} className="dark:text-apple-text-dark" />
-        </button>
-        <button onClick={() => navigate("/cart")} className="relative">
-          <AiOutlineShopping size={24} className="dark:text-apple-text-dark" />
-          <AnimatePresence>
-            {cartItems.length > 0 && (
-              <motion.span
-                className="absolute
-              top-0 right-0 translate-x-1/2 -translate-y-1/2
-              bg-apple-red text-white text-xs font-bold
-              w-5 h-5 rounded-full 
-              flex items-center justify-center"
-                key={cartItems.length} //让动画在数字变化时重新触发
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                transition={{ type: "spring", stiffness: 200, damping: 10 }}
-              >
-                {cartItems.length}
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </button>
         {username ? (
           <>
             <span className="hidden md:block">{username}</span>

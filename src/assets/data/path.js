@@ -2,23 +2,8 @@
 export const SHOPPING_PAGES = [
   {
     id: "store",
-    title: "商店",
+    title: "首页",
     path: "/",
-  },
-  {
-    id: "mac",
-    title: "电脑",
-    path: "categories/computer",
-  },
-  {
-    id: "phone",
-    title: "手机",
-    path: "categories/phone",
-  },
-  {
-    id: "ipad",
-    title: "iPad",
-    path: "categories/ipad",
   },
   {
     id: "AutoCAD",
@@ -30,6 +15,11 @@ export const SHOPPING_PAGES = [
     title: "SolidWorks展示区",
     path: "/SolidWorks",
   },
+  // {
+  //   id: "Creo",
+  //   title: "Creo展示区",
+  //   path: "/Creo",
+  // },
   {
     id: "Contact",
     title: "联系我们",

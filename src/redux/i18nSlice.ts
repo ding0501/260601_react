@@ -21,5 +21,5 @@ export const i18nSlice = createSlice({
   },
 });
 
-export const { setCulture } = i18nSlice.actions;
+
 export default i18nSlice.reducer;

@@ -49,7 +49,7 @@ const ProductIntroduce = ({ children }: ProductIntroduceProps) => {
                 animation: 'fadeInUp 0.8s ease-out forwards'
               }}
             >
-              我在寻找新的工作机会。从零部件装配图到三维模型图，这些三维模型由我独立完成，全流程展现出我对SolidWorks从抽象构想到实体呈现的成熟驾驭力。
+              正在寻找新的机会。从零部件装配图到三维模型图，这些三维模型由我独立完成，全流程展现出我对SolidWorks从抽象构想到实体呈现的成熟驾驭力。
             </p>
             <p 
               className="text-slate-600 text-sm md:text-base mt-3 leading-relaxed max-w-full mx-auto px-2"

@@ -1,20 +1,10 @@
 export { default as Home } from "./Home";
-export { default as About } from "./About";
-export { default as Computers } from "./Computers";
-export { default as IPad } from "./Ipad";
 export { default as AutoCAD } from "./AutoCAD";
 export { default as SolidWorks } from "./SolidWorks";
 export { default as Contact } from "./Contact";
-export { default as SmartHome } from "./SmartHome";
-export { default as Phones } from "./Phones";
 export { default as Register } from "./Register";
 export { default as SignIn } from "./SignIn";
 export { default as NotFound } from "./NotFound";
 export { default as ErrorPage } from "./ErrorPage";
-export { default as ProductDetail } from "./ProductDetail/ProductDetail";
-export { default as SearchResults } from "./SearchResults";
-export { default as UserCenter } from "./UserCenter";
-export { default as ShoppingCart } from "./ShoppingCart";
-export { default as Category } from "./Category";
-export { default as CheckOut } from "./CheckOut";
-export { default as OrderDetail } from "./OrderDetail";
+export { default as Creo } from "./Creo";
+

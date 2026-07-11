@@ -49,7 +49,7 @@ const ProductIntro = ({ children }: ProductIntroProps) => {
                 animation: 'fadeInUp 0.8s ease-out forwards'
               }}
             >
-              我在寻找新的工作机会。下面这些AutoCAD图纸都是我一笔一画独立完成的，每一张都严格按照工程制图规范来画。
+              正在寻找新的机会。下面这些AutoCAD图纸都是我一笔一画独立完成的，每一张都严格按照工程制图规范来画。
             </p>
             <p 
               className="text-slate-600 text-sm md:text-base mt-3 leading-relaxed max-w-full mx-auto px-2"
