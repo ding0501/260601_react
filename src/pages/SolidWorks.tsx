@@ -1,4 +1,3 @@
-
 import VideoViewer from "../components/VideoViewer";
 import ProductIntroduce from "../components/ProductIntroduce";
 import { NEW_ARRIVALS_LIST_4 } from "../assets/data";
@@ -19,9 +18,9 @@ const SolidWorks = () => {
           rowGap: "1.5rem",
         }}
       >
-        {NEW_ARRIVALS_LIST_4.map((item) => (
+        {NEW_ARRIVALS_LIST_4.map((item, index) => (
           <VideoViewer
-            key={item.title}
+            key={index} // 使用 index 作为 key 更可靠
             title={item.title}
             videoUrl={item.video}
             pdfUrl={item.document}
@@ -29,6 +28,7 @@ const SolidWorks = () => {
             textColor={item.textColor}
             showBorder={true}
             autoPlay={true}
+            index={index} // 传入 index 用于自动编号
           />
         ))}
       </div>

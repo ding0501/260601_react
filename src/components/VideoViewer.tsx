@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 type VideoViewerProps = {
-  title: string;
+  title?: string;  // 改为可选
   videoUrl: string;
   pdfUrl: string;
   imageUrl?: string;
@@ -9,6 +9,7 @@ type VideoViewerProps = {
   showBorder?: boolean;
   autoPlay?: boolean;
   muted?: boolean;
+  index?: number;  // 新增：用于自动编号
 };
 
 function VideoViewer({ 
@@ -19,7 +20,8 @@ function VideoViewer({
   textColor = "black", 
   showBorder = true,
   autoPlay = true,
-  muted = true
+  muted = true,
+  index  // 新增参数
 }: VideoViewerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
@@ -39,6 +41,20 @@ function VideoViewer({
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const fullscreenVideoRef = useRef<HTMLVideoElement>(null);
+
+  // 获取显示标题：如果有title则使用title，否则使用自动编号（从第一个开始）
+  const displayTitle = (() => {
+    // 如果有title，直接使用title
+    if (title) {
+      return title;
+    }
+    // 如果没有title，且有index，从第一个开始编号（index >= 0）
+    if (index !== undefined && index >= 0) {
+      return `编号 ${String(index + 1).padStart(3, '0')}`;
+    }
+    // 没有index时，返回默认名称
+    return '未命名文档';
+  })();
 
   // 处理 ESC 键退出全屏或PDF查看器
   useEffect(() => {
@@ -263,7 +279,6 @@ function VideoViewer({
 
   const handlePlayPause = () => {
     setHasUserInteracted(true);
-    // 用户交互后，如果当前是静音状态，保持静音（用户可以通过音量按钮取消静音）
     setIsPlaying(!isPlaying);
   };
 
@@ -302,7 +317,6 @@ function VideoViewer({
 
   const handleVideoClick = () => {
     setHasUserInteracted(true);
-    // 如果视频是静音的，点击时不要自动取消静音（避免用户意外听到声音）
     setIsPlaying(!isPlaying);
   };
 
@@ -381,7 +395,7 @@ function VideoViewer({
         {/* 标题区域 - 标题和描述在同一行 */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-2 sm:gap-4">
           <div className={`text-3xl md:text-5xl font-black text-${textColor} flex-shrink-0`}>
-            {title}
+            {displayTitle}
           </div>
           <div className="text-sm md:text-base text-gray-600 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 px-4 py-2 rounded-full backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 flex-shrink-0">
             🎬 点击视频切换播放/暂停&nbsp;&nbsp;<span className="text-red-600 dark:text-red-400">默认是静音播放</span>
@@ -396,7 +410,7 @@ function VideoViewer({
               {imageUrl && !imageError ? (
                 <img
                   src={getImagePath(imageUrl)}
-                  alt={title}
+                  alt={displayTitle}
                   className="w-full h-auto rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer"
                   onClick={handleViewImage}
                   onError={handleImageError}
@@ -699,14 +713,14 @@ function VideoViewer({
 
             <div className="absolute top-4 left-4 z-10">
               <h3 className="text-xl font-semibold text-gray-800 bg-white/90 px-4 py-2 rounded-lg shadow-lg">
-                📄 {title}
+                📄 {displayTitle}
               </h3>
             </div>
 
             <iframe
               src={pdfUrl}
               className="w-full h-full"
-              title={title}
+              title={displayTitle}
               style={{ border: 'none' }}
             />
           </div>
@@ -738,13 +752,13 @@ function VideoViewer({
 
             <div className="absolute top-4 left-4 z-10">
               <h3 className="text-xl font-semibold text-white bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
-                🖼️ {title}
+                🖼️ {displayTitle}
               </h3>
             </div>
 
             <img
               src={getImagePath(imageUrl)}
-              alt={title}
+              alt={displayTitle}
               className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg shadow-2xl"
               onError={handleImageError}
             />
@@ -802,7 +816,7 @@ function VideoViewer({
             {/* 顶部控制栏 */}
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
               <div className="text-black text-lg font-medium bg-white/80 px-4 py-2 rounded-lg backdrop-blur-sm">
-                {title}
+                {displayTitle}
               </div>
               
               <button

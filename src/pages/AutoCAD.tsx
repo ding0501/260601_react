@@ -1,8 +1,6 @@
 import DocumentViewer from "../components/DocumentViewer";
 import { NEW_ARRIVALS_LIST_3 } from "../assets/data/index";
 import ProductIntro from "../components/ProductIntro";
-// 删除这一行：import ProductList from "@components/ProductList";
-// 如果不需要 useTranslation，也可以删除这行
 import { useTranslation } from "react-i18next";
 
 function AutoCAD() {
@@ -14,19 +12,20 @@ function AutoCAD() {
       {/* 直接渲染 DocumentViewer，绕过 ProductList */}
       <div
         style={{
-          marginTop: "1rem", // 从 4rem 缩小到 1rem
+          marginTop: "1rem",
           display: "grid",
           justifyItems: "center",
-          rowGap: "1.5rem", // 从 3rem 缩小到 1.5rem
+          rowGap: "1.5rem",
         }}
       >
-        {NEW_ARRIVALS_LIST_3.map((item) => (
+        {NEW_ARRIVALS_LIST_3.map((item, index) => (
           <DocumentViewer
-            key={item.title}
+            key={index} // 使用 index 作为 key 更可靠
             title={item.title}
             imageUrl={item.image}
             pdfUrl={item.document}
             textColor={item.textColor}
+            index={index} // 传入 index 用于自动编号
           />
         ))}
       </div>

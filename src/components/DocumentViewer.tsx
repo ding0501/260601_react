@@ -1,14 +1,22 @@
 import { useState, useEffect } from "react";
 
 type DocumentViewerProps = {
-  title: string;
+  title?: string;  // 改为可选
   imageUrl: string;
   pdfUrl: string;
   textColor?: string;
   showBorder?: boolean;
+  index?: number;  // 新增：用于自动编号
 };
 
-function DocumentViewer({ title, imageUrl, pdfUrl, textColor = "black", showBorder = true }: DocumentViewerProps) {
+function DocumentViewer({ 
+  title, 
+  imageUrl, 
+  pdfUrl, 
+  textColor = "black", 
+  showBorder = true,
+  index 
+}: DocumentViewerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isPdfViewerOpen, setIsPdfViewerOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -54,6 +62,20 @@ function DocumentViewer({ title, imageUrl, pdfUrl, textColor = "black", showBord
       document.body.style.overflow = "";
     };
   }, [isPdfViewerOpen, isFullscreen]);
+
+  // 获取显示标题：如果有title则使用title，否则从第二个开始自动编号
+  const displayTitle = (() => {
+    // 如果有title，直接使用title
+    if (title) {
+      return title;
+    }
+    // 如果没有title，且有index，从第二个开始编号（index >= 1）
+    if (index !== undefined && index >= 1) {
+      return `编号 ${String(index).padStart(3, '0')}`;
+    }
+    // 第一个项目（index为0）或没有index时，返回默认名称
+    return '未命名文档';
+  })();
 
   const handleViewPDF = () => {
     setIsPdfViewerOpen(true);
@@ -199,7 +221,7 @@ function DocumentViewer({ title, imageUrl, pdfUrl, textColor = "black", showBord
             <div className="relative w-full max-w-[600px] lg:max-w-[700px]">
               <img 
                 src={imageError ? '/images/placeholder.png' : getImagePath(imageUrl)} 
-                alt={title}
+                alt={displayTitle}
                 className="w-full h-auto cursor-pointer rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
                 onClick={handleOpenFullscreen}
                 onError={handleImageError}
@@ -214,9 +236,9 @@ function DocumentViewer({ title, imageUrl, pdfUrl, textColor = "black", showBord
           {/* 信息区域 - 内容居中，往下调整 */}
           <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left justify-center lg:justify-center">
             <div className="space-y-6 lg:pl-8 lg:pr-4">
-              {/* 标题 */}
+              {/* 标题 - 使用 displayTitle */}
               <div className={`text-4xl font-black md:text-6xl text-${textColor}`}>
-                {title}
+                {displayTitle}
               </div>
               
               {/* 描述 */}
@@ -306,10 +328,10 @@ function DocumentViewer({ title, imageUrl, pdfUrl, textColor = "black", showBord
               ✕
             </button>
 
-            {/* PDF标题 */}
+            {/* PDF标题 - 使用 displayTitle */}
             <div className="absolute top-4 left-4 z-10">
               <h3 className="text-xl font-semibold text-gray-800 bg-white/90 px-4 py-2 rounded-lg shadow-lg">
-                📄 {title}
+                📄 {displayTitle}
               </h3>
             </div>
 
@@ -317,7 +339,7 @@ function DocumentViewer({ title, imageUrl, pdfUrl, textColor = "black", showBord
             <iframe
               src={pdfUrl}
               className="w-full h-full"
-              title={title}
+              title={displayTitle}
               style={{ border: 'none' }}
             />
           </div>
@@ -350,7 +372,7 @@ function DocumentViewer({ title, imageUrl, pdfUrl, textColor = "black", showBord
             >
               <img 
                 src={imageError ? '/images/placeholder.png' : getImagePath(imageUrl)} 
-                alt={title}
+                alt={displayTitle}
                 className="max-w-[95vw] max-h-[95vh] object-contain select-none"
                 onError={handleImageError}
                 draggable={false}
@@ -359,9 +381,9 @@ function DocumentViewer({ title, imageUrl, pdfUrl, textColor = "black", showBord
 
             {/* 顶部控制栏 - 标题和关闭按钮在同一排 */}
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-              {/* 标题 - 左对齐 */}
+              {/* 标题 - 使用 displayTitle */}
               <div className="text-black text-lg font-medium bg-white/80 px-4 py-2 rounded-lg backdrop-blur-sm">
-                {title}
+                {displayTitle}
               </div>
               
               {/* 关闭按钮 - 右对齐 */}
