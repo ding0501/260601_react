@@ -8,11 +8,10 @@
 
 ## ✨ 功能清单
 
-- [x] 商品列表展示（Apple 风格 UI）
-- [x] 购物车（增删改、数量调整、总价计算）
-- [x] 用户登录/登出（模拟）
-- [x] 关键词搜索商品
-- [x] 中英文切换（i18n）
+- [x] 首页
+- [x] AutoCAD展示区
+- [x] SolidWorks展示区
+- [x] creo展示区
 - [x] 暗色/亮色模式切换
 - [x] 响应式设计（PC + iPad+手机适配）
 
@@ -36,10 +35,8 @@
 npm install
 npm run dev
 
-## 📱 截图
-![PC端](./public/images/PC端截图.png)
-![手机端](./public/images/手机端截图.png) 
 
 
 
-（特别说明：学习/练习项目，与 Apple 无关联）
+
+（特别说明：学习/练习项目）
