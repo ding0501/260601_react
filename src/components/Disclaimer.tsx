@@ -91,7 +91,7 @@ const Disclaimer = ({ children, text }: DisclaimerProps) => {
                 精通 <span className="text-blue-600 font-bold">AutoCAD</span> 与 <span className="text-cyan-600 font-bold">SolidWorks</span>，
                 提供从2D施工图到3D机械设计的<strong className="text-slate-900 font-bold">全流程代画服务</strong>。
                 <br className="hidden sm:block" />
-                <span className="inline-block mt-1 sm:mt-2 text-emerald-700 font-semibold text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl break-words">7x24小时响应，交付即所得。</span>
+                {/* <span className="inline-block mt-1 sm:mt-2 text-emerald-700 font-semibold text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl break-words">7x24小时响应，交付即所得。</span> */}
               </p>
             </div>
 
