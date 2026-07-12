@@ -20,11 +20,11 @@ export const SHOPPING_PAGES = [
   //   title: "Creo展示区",
   //   path: "/Creo",
   // },
-  {
-    id: "Contact",
-    title: "联系我们",
-    path: "/Contact",
-  },
+  // {
+  //   id: "Contact",
+  //   title: "联系我们",
+  //   path: "/Contact",
+  // },
 ];
 
 export const AUTH_PAGES = [
