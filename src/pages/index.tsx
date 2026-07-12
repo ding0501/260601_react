@@ -1,6 +1,7 @@
 export { default as Home } from "./Home";
 export { default as AutoCAD } from "./AutoCAD";
 export { default as SolidWorks } from "./SolidWorks";
+export { default as SolidWorksFit } from "./SolidWorksFit";
 export { default as Contact } from "./Contact";
 export { default as Register } from "./Register";
 export { default as SignIn } from "./SignIn";

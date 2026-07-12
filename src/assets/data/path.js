@@ -15,6 +15,11 @@ export const SHOPPING_PAGES = [
     title: "SolidWorks展示区",
     path: "/SolidWorks",
   },
+  {
+    id: "SolidWorksFit",
+    title: "SolidWorks装配区",
+    path: "/SolidWorksFit",
+  },
   // {
   //   id: "Creo",
   //   title: "Creo展示区",

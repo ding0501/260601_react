@@ -17,7 +17,15 @@ export const product2 = {
   soldOut: false,
 };
 
-export const NEW_ARRIVALS_LIST_2 = [];
+export const NEW_ARRIVALS_LIST_2 = [
+  {
+    title: "",
+    video_1: "/documents/SolidWorksFit/装配体旋转001.mp4",
+    video_2:"/documents/SolidWorksFit/装配体爆炸动画001.mp4",
+    textColor: "black",
+    soldOut: false,
+  },
+];
 export const NEW_ARRIVALS_LIST_3 = [
   {
     title: "期待的OFFER",
@@ -196,6 +204,30 @@ export const NEW_ARRIVALS_LIST_4 = [
     image: "/documents/SolidWorks/零件工程图003.png",
     video: "/documents/SolidWorks/零件003.mp4",
     document:"/documents/SolidWorks/零件工程图003.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "",
+    image: "/documents/SolidWorks/零件工程图010.png",
+    video: "/documents/SolidWorks/零件010.mp4",
+    document:"/documents/SolidWorks/零件工程图010.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "",
+    image: "/documents/SolidWorks/零件工程图011.png",
+    video: "/documents/SolidWorks/零件011.mp4",
+    document:"/documents/SolidWorks/零件工程图011.pdf",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "",
+    image: "/documents/SolidWorks/零件工程图012.png",
+    video: "/documents/SolidWorks/零件012.mp4",
+    document:"/documents/SolidWorks/零件工程图012.pdf",
     textColor: "black",
     soldOut: false,
   },

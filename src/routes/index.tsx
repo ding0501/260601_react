@@ -5,8 +5,9 @@ import { createBrowserRouter, LoaderFunctionArgs } from "react-router-dom";
 import {
   AutoCAD,
   SolidWorks,
+  SolidWorksFit,
   Contact,
- Creo,
+  Creo,
   SignIn,
   Register,
   Home,
@@ -35,7 +36,8 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
       },
       { path: "SolidWorks", element: <SolidWorks />, errorElement: <ErrorPage /> }, // 错误页面
-       {
+      { path: "SolidWorksFit", element: <SolidWorksFit />, errorElement: <ErrorPage /> },
+      {
         path: "Creo",
         element: <Creo />,
         errorElement: <ErrorPage />,

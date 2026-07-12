@@ -8,6 +8,8 @@ export { default as Disclaimer } from "./Disclaimer";
 export * from "./Disclaimer";
 export { default as VideoViewer } from "./VideoViewer";
 export * from "./VideoViewer";
+export { default as VideoViewerFit } from "./VideoViewerFit";
+export * from "./VideoViewerFit";
 export { default as DocumentViewer } from "./DocumentViewer";
 export * from "./DocumentViewer";
 export { default as SkuSelect } from "./SkuSelect";
