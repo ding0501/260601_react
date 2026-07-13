@@ -200,41 +200,41 @@ function VideoViewerFit({
     <>
       <div
         className={`
-          w-full h-full min-h-screen
+          w-full h-full
           bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30 dark:from-gray-800 dark:via-gray-700/50 dark:to-gray-600/50
           backdrop-blur-sm
-          p-4 sm:p-6 md:p-8 lg:p-10
+          p-2 sm:p-3 md:p-4
         `}
       >
-        {/* 标题区域 */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 sm:mb-4 gap-2 sm:gap-4">
-          <div className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-${textColor} flex-shrink-0`}>
+        {/* 标题区域 - 缩小 */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 sm:mb-3 gap-1 sm:gap-3">
+          <div className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-${textColor} flex-shrink-0`}>
             {displayTitle}
           </div>
-          <div className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 flex-shrink-0">
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 px-2 sm:px-3 py-1 rounded-full backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 flex-shrink-0">
             🎬 点击视频全屏播放
           </div>
         </div>
 
-        {/* 视频容器 - 缩小高度 */}
-        <div className="border-2 border-gray-300 dark:border-gray-600 rounded-2xl bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm p-3 sm:p-4 md:p-5 shadow-xl">
-          <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 md:gap-5 h-[60vh] lg:h-[55vh]">
+        {/* 视频容器 - 缩小高度和内边距 */}
+        <div className="border-2 border-gray-300 dark:border-gray-600 rounded-xl bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm p-1.5 sm:p-2 shadow-lg">
+          {/* 修改 gap 从 gap-1.5 sm:gap-2 改为 gap-2 sm:gap-3 */}
+          <div className="flex flex-col lg:flex-row gap-2 sm:gap-3 h-[45vh] lg:h-[40vh]">
             
             {/* 左侧视频 - video_2 (装配体爆炸动画) */}
             <div 
-              className="flex-1 min-h-0 group cursor-pointer p-1"
+              className="flex-1 min-h-0 group cursor-pointer p-0.5"
               onClick={() => handleVideoClick('left')}
             >
               <div className="relative w-full h-full bg-black/5 dark:bg-white/5 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-2xl">
                 <div className="absolute inset-0">
                   {!video_2 || videoError2 ? (
                     <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                      <div className="text-center text-gray-500 dark:text-gray-400 p-4">
-                        <svg className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="text-center text-gray-500 dark:text-gray-400 p-2">
+                        <svg className="w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-1 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
-                        <p>视频加载失败</p>
-                        <p className="text-sm mt-1">请检查视频文件路径</p>
+                        <p className="text-sm">视频加载失败</p>
                       </div>
                     </div>
                   ) : (
@@ -255,29 +255,29 @@ function VideoViewerFit({
                   )}
                 </div>
                 
-                {/* 全屏提示 */}
+                {/* 全屏提示 - 缩小 */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  <div className="bg-black/60 backdrop-blur-sm text-white text-sm sm:text-base px-3 py-1.5 rounded-full">
+                  <div className="bg-black/60 backdrop-blur-sm text-white text-xs sm:text-sm px-2 py-1 rounded-full">
                     ⛶ 点击全屏播放
                   </div>
                 </div>
                 
-                {/* 顶部控制栏 */}
-                <div className="absolute top-2 left-2 right-2 flex items-center justify-between pointer-events-none">
-                  <div className="bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full pointer-events-auto">
+                {/* 顶部控制栏 - 缩小 */}
+                <div className="absolute top-1 left-1 right-1 flex items-center justify-between pointer-events-none">
+                  <div className="bg-black/50 backdrop-blur-sm text-white text-[10px] px-1.5 py-0.5 rounded-full pointer-events-auto">
                     🔄 爆炸动画
                   </div>
                   
-                  <div className="flex items-center gap-1.5 pointer-events-auto">
-                    <div className="bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                      {isPlaying ? '▶ 播放中' : '⏸ 已暂停'}
+                  <div className="flex items-center gap-1 pointer-events-auto">
+                    <div className="bg-black/50 backdrop-blur-sm text-white text-[10px] px-1.5 py-0.5 rounded-full">
+                      {isPlaying ? '▶' : '⏸'}
                     </div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleToggleMute();
                       }}
-                      className="bg-black/50 backdrop-blur-sm text-white text-sm px-2 py-1 rounded-full hover:bg-black/70 transition-colors w-7 h-7 flex items-center justify-center pointer-events-auto"
+                      className="bg-black/50 backdrop-blur-sm text-white text-xs px-1.5 py-0.5 rounded-full hover:bg-black/70 transition-colors w-5 h-5 flex items-center justify-center pointer-events-auto"
                       title={isMuted ? "取消静音" : "静音"}
                     >
                       {isMuted ? '🔇' : '🔊'}
@@ -289,19 +289,18 @@ function VideoViewerFit({
 
             {/* 右侧视频 - video_1 (装配体旋转) */}
             <div 
-              className="flex-1 min-h-0 group cursor-pointer p-1"
+              className="flex-1 min-h-0 group cursor-pointer p-0.5"
               onClick={() => handleVideoClick('right')}
             >
               <div className="relative w-full h-full bg-black/5 dark:bg-white/5 rounded-lg overflow-hidden transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-2xl">
                 <div className="absolute inset-0">
                   {!video_1 || videoError1 ? (
                     <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                      <div className="text-center text-gray-500 dark:text-gray-400 p-4">
-                        <svg className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="text-center text-gray-500 dark:text-gray-400 p-2">
+                        <svg className="w-8 h-8 sm:w-10 sm:h-10 mx-auto mb-1 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                         </svg>
-                        <p>视频加载失败</p>
-                        <p className="text-sm mt-1">请检查视频文件路径</p>
+                        <p className="text-sm">视频加载失败</p>
                       </div>
                     </div>
                   ) : (
@@ -323,26 +322,26 @@ function VideoViewerFit({
                 </div>
                 
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  <div className="bg-black/60 backdrop-blur-sm text-white text-sm sm:text-base px-3 py-1.5 rounded-full">
+                  <div className="bg-black/60 backdrop-blur-sm text-white text-xs sm:text-sm px-2 py-1 rounded-full">
                     ⛶ 点击全屏播放
                   </div>
                 </div>
                 
-                <div className="absolute top-2 left-2 right-2 flex items-center justify-between pointer-events-none">
-                  <div className="bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full pointer-events-auto">
+                <div className="absolute top-1 left-1 right-1 flex items-center justify-between pointer-events-none">
+                  <div className="bg-black/50 backdrop-blur-sm text-white text-[10px] px-1.5 py-0.5 rounded-full pointer-events-auto">
                     🔄 旋转动画
                   </div>
                   
-                  <div className="flex items-center gap-1.5 pointer-events-auto">
-                    <div className="bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                      {isPlaying ? '▶ 播放中' : '⏸ 已暂停'}
+                  <div className="flex items-center gap-1 pointer-events-auto">
+                    <div className="bg-black/50 backdrop-blur-sm text-white text-[10px] px-1.5 py-0.5 rounded-full">
+                      {isPlaying ? '▶' : '⏸'}
                     </div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleToggleMute();
                       }}
-                      className="bg-black/50 backdrop-blur-sm text-white text-sm px-2 py-1 rounded-full hover:bg-black/70 transition-colors w-7 h-7 flex items-center justify-center pointer-events-auto"
+                      className="bg-black/50 backdrop-blur-sm text-white text-xs px-1.5 py-0.5 rounded-full hover:bg-black/70 transition-colors w-5 h-5 flex items-center justify-center pointer-events-auto"
                       title={isMuted ? "取消静音" : "静音"}
                     >
                       {isMuted ? '🔇' : '🔊'}
@@ -355,7 +354,7 @@ function VideoViewerFit({
         </div>
       </div>
 
-      {/* 全屏遮罩层 */}
+      {/* 全屏遮罩层 - 保持不变 */}
       {isFullscreen && (
         <div
           className="fixed inset-0 z-50 bg-black flex items-center justify-center"
