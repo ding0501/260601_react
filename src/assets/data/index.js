@@ -20,6 +20,13 @@ export const product2 = {
 export const NEW_ARRIVALS_LIST_2 = [
   {
     title: "",
+    video_1: "/documents/SolidWorksFit/装配体旋转003.mp4",
+    video_2:"/documents/SolidWorksFit/装配体爆炸动画003.mp4",
+    textColor: "black",
+    soldOut: false,
+  },
+  {
+    title: "",
     video_1: "/documents/SolidWorksFit/装配体旋转002.mp4",
     video_2:"/documents/SolidWorksFit/装配体爆炸动画002.mp4",
     textColor: "black",
@@ -158,6 +165,94 @@ export const NEW_ARRIVALS_LIST_3 = [
   
 ];
 export const NEW_ARRIVALS_LIST_4 = [
+  {
+    "title": "零件工程图019",
+    "image": "/documents/SolidWorks/零件工程图019.png",
+    "video": "/documents/SolidWorks/零件019.mp4",
+    "document": "/documents/SolidWorks/零件工程图019.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
+  {
+    "title": "零件工程图020",
+    "image": "/documents/SolidWorks/零件工程图020.png",
+    "video": "/documents/SolidWorks/零件020.mp4",
+    "document": "/documents/SolidWorks/零件工程图020.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
+  {
+    "title": "零件工程图021",
+    "image": "/documents/SolidWorks/零件工程图021.png",
+    "video": "/documents/SolidWorks/零件021.mp4",
+    "document": "/documents/SolidWorks/零件工程图021.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
+  {
+    "title": "零件工程图022",
+    "image": "/documents/SolidWorks/零件工程图022.png",
+    "video": "/documents/SolidWorks/零件022.mp4",
+    "document": "/documents/SolidWorks/零件工程图022.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
+  {
+    "title": "零件工程图023",
+    "image": "/documents/SolidWorks/零件工程图023.png",
+    "video": "/documents/SolidWorks/零件023.mp4",
+    "document": "/documents/SolidWorks/零件工程图023.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
+  {
+    "title": "零件工程图024",
+    "image": "/documents/SolidWorks/零件工程图024.png",
+    "video": "/documents/SolidWorks/零件024.mp4",
+    "document": "/documents/SolidWorks/零件工程图024.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
+  {
+    "title": "零件工程图025",
+    "image": "/documents/SolidWorks/零件工程图025.png",
+    "video": "/documents/SolidWorks/零件025.mp4",
+    "document": "/documents/SolidWorks/零件工程图025.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
+  {
+    "title": "零件工程图026",
+    "image": "/documents/SolidWorks/零件工程图026.png",
+    "video": "/documents/SolidWorks/零件026.mp4",
+    "document": "/documents/SolidWorks/零件工程图026.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
+  {
+    "title": "零件工程图027",
+    "image": "/documents/SolidWorks/零件工程图027.png",
+    "video": "/documents/SolidWorks/零件027.mp4",
+    "document": "/documents/SolidWorks/零件工程图027.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
+  {
+    "title": "零件工程图028",
+    "image": "/documents/SolidWorks/零件工程图028.png",
+    "video": "/documents/SolidWorks/零件028.mp4",
+    "document": "/documents/SolidWorks/零件工程图028.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
+  {
+    "title": "零件工程图029",
+    "image": "/documents/SolidWorks/零件工程图029.png",
+    "video": "/documents/SolidWorks/零件029.mp4",
+    "document": "/documents/SolidWorks/零件工程图029.pdf",
+    "textColor": "black",
+    "soldOut": false
+  },
     {
     title: "",
     image: "/documents/SolidWorks/零件工程图013.png",
