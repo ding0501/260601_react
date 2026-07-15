@@ -27,6 +27,9 @@ function VideoViewerFit({
   const [isMuted, setIsMuted] = useState(muted);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isLoading1, setIsLoading1] = useState(true);
+  const [isLoading2, setIsLoading2] = useState(true);
+  const [isFullscreenLoading, setIsFullscreenLoading] = useState(false);
   
   const video1Ref = useRef<HTMLVideoElement>(null); // 右侧
   const video2Ref = useRef<HTMLVideoElement>(null); // 左侧
@@ -65,21 +68,74 @@ function VideoViewerFit({
     };
   }, [isFullscreen]);
 
-  // 左侧视频自动播放
+  // 预加载和自动播放逻辑
   useEffect(() => {
-    if (autoPlay && video2Ref.current && !hasUserInteracted && video_2) {
-      video2Ref.current.muted = true;
-      video2Ref.current.play().catch(() => {});
-    }
-  }, [autoPlay, hasUserInteracted, video_2]);
+    const video = video2Ref.current;
+    if (!video || !video_2) return;
 
-  // 右侧视频自动播放
-  useEffect(() => {
-    if (autoPlay && video1Ref.current && !hasUserInteracted && video_1) {
-      video1Ref.current.muted = true;
-      video1Ref.current.play().catch(() => {});
+    // 设置预加载策略 - 预加载元数据和部分内容
+    video.preload = "auto";
+    
+    // 加载完成后隐藏加载状态
+    const handleLoadedData = () => {
+      setIsLoading2(false);
+    };
+
+    const handleCanPlay = () => {
+      setIsLoading2(false);
+    };
+
+    video.addEventListener("loadeddata", handleLoadedData);
+    video.addEventListener("canplay", handleCanPlay);
+
+    // 如果视频已经加载完成
+    if (video.readyState >= 3) {
+      setIsLoading2(false);
     }
-  }, [autoPlay, hasUserInteracted, video_1]);
+
+    // 自动播放
+    if (autoPlay && !hasUserInteracted) {
+      video.muted = true;
+      video.play().catch(() => {});
+    }
+
+    return () => {
+      video.removeEventListener("loadeddata", handleLoadedData);
+      video.removeEventListener("canplay", handleCanPlay);
+    };
+  }, [video_2, autoPlay, hasUserInteracted]);
+
+  useEffect(() => {
+    const video = video1Ref.current;
+    if (!video || !video_1) return;
+
+    video.preload = "auto";
+
+    const handleLoadedData = () => {
+      setIsLoading1(false);
+    };
+
+    const handleCanPlay = () => {
+      setIsLoading1(false);
+    };
+
+    video.addEventListener("loadeddata", handleLoadedData);
+    video.addEventListener("canplay", handleCanPlay);
+
+    if (video.readyState >= 3) {
+      setIsLoading1(false);
+    }
+
+    if (autoPlay && !hasUserInteracted) {
+      video.muted = true;
+      video.play().catch(() => {});
+    }
+
+    return () => {
+      video.removeEventListener("loadeddata", handleLoadedData);
+      video.removeEventListener("canplay", handleCanPlay);
+    };
+  }, [video_1, autoPlay, hasUserInteracted]);
 
   // 同步左侧视频播放状态
   useEffect(() => {
@@ -116,8 +172,10 @@ function VideoViewerFit({
   const handleVideoError = (side: 'left' | 'right') => {
     if (side === 'left') {
       setVideoError2(true);
+      setIsLoading2(false);
     } else {
       setVideoError1(true);
+      setIsLoading1(false);
     }
   };
 
@@ -174,26 +232,71 @@ function VideoViewerFit({
     }
     
     setIsFullscreen(true);
+    setIsFullscreenLoading(true);
     
     setTimeout(() => {
       if (fullscreenVideoRef.current && videoSrc) {
+        // 预加载全屏视频
+        fullscreenVideoRef.current.preload = "auto";
         fullscreenVideoRef.current.src = videoSrc;
         fullscreenVideoRef.current.currentTime = currentTime;
         fullscreenVideoRef.current.muted = isMuted;
-        fullscreenVideoRef.current.play().catch(() => {});
+        
+        // 等待视频加载完成后再播放
+        const playFullscreen = () => {
+          fullscreenVideoRef.current?.play()
+            .then(() => {
+              setIsFullscreenLoading(false);
+            })
+            .catch(() => {
+              setIsFullscreenLoading(false);
+            });
+        };
+
+        // 如果视频已经加载完成，直接播放
+        if (fullscreenVideoRef.current.readyState >= 3) {
+          playFullscreen();
+        } else {
+          // 否则等待加载完成
+          const handleCanPlay = () => {
+            playFullscreen();
+            fullscreenVideoRef.current?.removeEventListener("canplay", handleCanPlay);
+          };
+          fullscreenVideoRef.current.addEventListener("canplay", handleCanPlay);
+          // 设置超时，防止卡死
+          setTimeout(() => {
+            setIsFullscreenLoading(false);
+          }, 3000);
+        }
       }
     }, 100);
   };
 
   const handleCloseFullscreen = () => {
     setIsFullscreen(false);
+    setIsFullscreenLoading(false);
     if (fullscreenVideoRef.current) {
       fullscreenVideoRef.current.pause();
+      fullscreenVideoRef.current.src = "";
     }
   };
 
   const handleFullscreenClick = () => {
     setIsPlaying(!isPlaying);
+  };
+
+  // 加载动画组件
+  const LoadingSpinner = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
+    const sizeClasses = {
+      sm: "w-6 h-6 border-2",
+      md: "w-10 h-10 border-3",
+      lg: "w-16 h-16 border-4"
+    };
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-black/10 backdrop-blur-sm">
+        <div className={`${sizeClasses[size]} border-blue-500 border-t-transparent rounded-full animate-spin`} />
+      </div>
+    );
   };
 
   return (
@@ -218,7 +321,6 @@ function VideoViewerFit({
 
         {/* 视频容器 - 缩小高度和内边距 */}
         <div className="border-2 border-gray-300 dark:border-gray-600 rounded-xl bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm p-1.5 sm:p-2 shadow-lg">
-          {/* 修改 gap 从 gap-1.5 sm:gap-2 改为 gap-2 sm:gap-3 */}
           <div className="flex flex-col lg:flex-row gap-2 sm:gap-3 h-[45vh] lg:h-[40vh]">
             
             {/* 左侧视频 - video_2 (装配体爆炸动画) */}
@@ -238,20 +340,24 @@ function VideoViewerFit({
                       </div>
                     </div>
                   ) : (
-                    <video
-                      ref={video2Ref}
-                      src={getVideoPath(video_2)}
-                      className="w-full h-full object-contain"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleVideoClick('left');
-                      }}
-                      onError={() => handleVideoError('left')}
-                      playsInline
-                      muted={isMuted}
-                      loop
-                      autoPlay={autoPlay}
-                    />
+                    <>
+                      <video
+                        ref={video2Ref}
+                        src={getVideoPath(video_2)}
+                        className="w-full h-full object-contain"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleVideoClick('left');
+                        }}
+                        onError={() => handleVideoError('left')}
+                        playsInline
+                        muted={isMuted}
+                        loop
+                        autoPlay={autoPlay}
+                        preload="auto"
+                      />
+                      {isLoading2 && <LoadingSpinner size="md" />}
+                    </>
                   )}
                 </div>
                 
@@ -304,20 +410,24 @@ function VideoViewerFit({
                       </div>
                     </div>
                   ) : (
-                    <video
-                      ref={video1Ref}
-                      src={getVideoPath(video_1)}
-                      className="w-full h-full object-contain"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleVideoClick('right');
-                      }}
-                      onError={() => handleVideoError('right')}
-                      playsInline
-                      muted={isMuted}
-                      loop
-                      autoPlay={autoPlay}
-                    />
+                    <>
+                      <video
+                        ref={video1Ref}
+                        src={getVideoPath(video_1)}
+                        className="w-full h-full object-contain"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleVideoClick('right');
+                        }}
+                        onError={() => handleVideoError('right')}
+                        playsInline
+                        muted={isMuted}
+                        loop
+                        autoPlay={autoPlay}
+                        preload="auto"
+                      />
+                      {isLoading1 && <LoadingSpinner size="md" />}
+                    </>
                   )}
                 </div>
                 
@@ -361,6 +471,11 @@ function VideoViewerFit({
           onClick={handleCloseFullscreen}
         >
           <div className="relative w-full h-full flex items-center justify-center p-4">
+            {isFullscreenLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10">
+                <LoadingSpinner size="lg" />
+              </div>
+            )}
             <video
               ref={fullscreenVideoRef}
               className="max-w-full max-h-full object-contain"
@@ -373,22 +488,23 @@ function VideoViewerFit({
               loop
               autoPlay
               controls
+              preload="auto"
             />
             
             <button
-              className="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition-colors duration-200 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center hover:bg-black/70"
+              className="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 transition-colors duration-200 bg-black/50 rounded-full w-12 h-12 flex items-center justify-center hover:bg-black/70 z-20"
               onClick={handleCloseFullscreen}
             >
               ✕
             </button>
 
-            <div className="absolute top-4 left-4 flex items-center gap-3">
+            <div className="absolute top-4 left-4 flex items-center gap-3 z-20">
               <div className="text-white text-lg font-medium bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
                 {displayTitle}
               </div>
             </div>
 
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm">
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm z-20">
               🖱️ 点击视频切换播放/暂停 | 点击外部或按 ESC 退出全屏
             </div>
           </div>

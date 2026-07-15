@@ -165,6 +165,31 @@ export const NEW_ARRIVALS_LIST_3 = [
   
 ];
 export const NEW_ARRIVALS_LIST_4 = [
+ 
+  {
+    title: "",
+    image: "/documents/SolidWorks/零件工程图031.png",
+    video: "/documents/SolidWorks/零件031.mp4",
+    document: "/documents/SolidWorks/零件工程图031.pdf",
+    textColor: "black",
+    soldOut: false
+  },
+  {
+    title: "",
+    image: "/documents/SolidWorks/零件工程图030.png",
+    video: "/documents/SolidWorks/零件030.mp4",
+    document: "/documents/SolidWorks/零件工程图030.pdf",
+    textColor: "black",
+    soldOut: false
+  },
+   {
+    title: "",
+    image: "/documents/SolidWorks/零件工程图032.png",
+    video: "/documents/SolidWorks/零件032.mp4",
+    document: "/documents/SolidWorks/零件工程图032.pdf",
+    textColor: "black",
+    soldOut: false
+  },
   {
     title: "",
     image: "/documents/SolidWorks/零件工程图019.png",

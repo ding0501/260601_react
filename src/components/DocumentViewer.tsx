@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type DocumentViewerProps = {
-  title?: string;  // 改为可选
+  title?: string;
   imageUrl: string;
   pdfUrl: string;
   textColor?: string;
   showBorder?: boolean;
-  index?: number;  // 新增：用于自动编号
+  index?: number;
 };
 
 function DocumentViewer({ 
@@ -25,6 +25,73 @@ function DocumentViewer({
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [isImageLoading, setIsImageLoading] = useState(true);
+  const [isFullscreenImageLoading, setIsFullscreenImageLoading] = useState(true);
+  const [preloadedImage, setPreloadedImage] = useState<string | null>(null);
+  const [isPdfLoading, setIsPdfLoading] = useState(true);
+  
+  const fullscreenImgRef = useRef<HTMLImageElement>(null);
+  const mainImgRef = useRef<HTMLImageElement>(null);
+  const pdfIframeRef = useRef<HTMLIFrameElement>(null);
+  const preloadLinkRef = useRef<HTMLLinkElement | null>(null);
+
+  // 预加载图片
+  useEffect(() => {
+    if (!imageUrl) return;
+
+    setIsImageLoading(true);
+    setImageError(false);
+
+    // 使用 Image 对象预加载
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    
+    img.onload = () => {
+      setIsImageLoading(false);
+      setPreloadedImage(getImagePath(imageUrl));
+    };
+    
+    img.onerror = () => {
+      setIsImageLoading(false);
+      setImageError(true);
+    };
+
+    img.src = getImagePath(imageUrl);
+
+    // 预加载全屏图片（使用 link prefetch）
+    if (!preloadLinkRef.current) {
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.as = 'image';
+      link.href = getImagePath(imageUrl);
+      document.head.appendChild(link);
+      preloadLinkRef.current = link;
+    }
+
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+      if (preloadLinkRef.current) {
+        document.head.removeChild(preloadLinkRef.current);
+        preloadLinkRef.current = null;
+      }
+    };
+  }, [imageUrl]);
+
+  // 预加载 PDF（使用 link prefetch）
+  useEffect(() => {
+    if (!pdfUrl) return;
+
+    const link = document.createElement('link');
+    link.rel = 'prefetch';
+    link.as = 'document';
+    link.href = pdfUrl;
+    document.head.appendChild(link);
+
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, [pdfUrl]);
 
   // 处理 ESC 键退出全屏或PDF查看器
   useEffect(() => {
@@ -63,44 +130,60 @@ function DocumentViewer({
     };
   }, [isPdfViewerOpen, isFullscreen]);
 
-  // 获取显示标题：如果有title则使用title，否则从第二个开始自动编号
+  // 获取显示标题
   const displayTitle = (() => {
-    // 如果有title，直接使用title
     if (title) {
       return title;
     }
-    // 如果没有title，且有index，从第二个开始编号（index >= 1）
     if (index !== undefined && index >= 1) {
       return `编号 ${String(index).padStart(3, '0')}`;
     }
-    // 第一个项目（index为0）或没有index时，返回默认名称
     return '未命名文档';
   })();
 
-  const handleViewPDF = () => {
-    setIsPdfViewerOpen(true);
-  };
-
-  const handleClosePdfViewer = () => {
-    setIsPdfViewerOpen(false);
-  };
-
-  const handlePdfViewerClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    // 点击背景区域关闭PDF查看器
-    if (e.target === e.currentTarget) {
-      handleClosePdfViewer();
+  // 路径处理函数
+  const getImagePath = (url: string) => {
+    if (!url) return '';
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return url;
     }
+    if (url.startsWith('/')) {
+      return url;
+    }
+    return `./${url}`;
   };
 
+  // 打开全屏时预加载高分辨率图片
   const handleOpenFullscreen = () => {
     setIsFullscreen(true);
+    setIsFullscreenImageLoading(true);
     setScale(1);
     setRotation(0);
     setPosition({ x: 0, y: 0 });
+
+    // 使用 requestAnimationFrame 优化渲染
+    requestAnimationFrame(() => {
+      if (fullscreenImgRef.current) {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+          setIsFullscreenImageLoading(false);
+          if (fullscreenImgRef.current) {
+            fullscreenImgRef.current.src = img.src;
+          }
+        };
+        img.onerror = () => {
+          setIsFullscreenImageLoading(false);
+          setImageError(true);
+        };
+        img.src = getImagePath(imageUrl);
+      }
+    });
   };
 
   const handleCloseFullscreen = () => {
     setIsFullscreen(false);
+    setIsFullscreenImageLoading(true);
     setScale(1);
     setRotation(0);
     setPosition({ x: 0, y: 0 });
@@ -114,7 +197,28 @@ function DocumentViewer({
     }
   };
 
-  // 处理鼠标滚轮缩放
+  const handleViewPDF = () => {
+    setIsPdfViewerOpen(true);
+    setIsPdfLoading(true);
+  };
+
+  const handleClosePdfViewer = () => {
+    setIsPdfViewerOpen(false);
+    setIsPdfLoading(true);
+  };
+
+  const handlePdfViewerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      handleClosePdfViewer();
+    }
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+    setIsImageLoading(false);
+    setIsFullscreenImageLoading(false);
+  };
+
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
@@ -122,7 +226,6 @@ function DocumentViewer({
     setScale(newScale);
   };
 
-  // 处理鼠标拖动开始
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (scale > 1) {
       setIsDragging(true);
@@ -133,7 +236,6 @@ function DocumentViewer({
     }
   };
 
-  // 处理鼠标拖动移动
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (isDragging && scale > 1) {
       setPosition({
@@ -143,12 +245,10 @@ function DocumentViewer({
     }
   };
 
-  // 处理鼠标拖动结束
   const handleMouseUp = () => {
     setIsDragging(false);
   };
 
-  // 处理触摸事件（移动端支持）
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (scale > 1 && e.touches.length === 1) {
       setIsDragging(true);
@@ -172,29 +272,33 @@ function DocumentViewer({
     setIsDragging(false);
   };
 
-  // 处理图片加载失败时显示占位图
-  const handleImageError = () => {
-    setImageError(true);
-  };
-
-  // 获取图片路径（处理相对路径）
-  const getImagePath = (url: string) => {
-    if (url.startsWith('/')) {
-      return url;
-    }
-    return `./${url}`;
-  };
-
-  // 重置缩放、旋转和位置
   const handleReset = () => {
     setScale(1);
     setRotation(0);
     setPosition({ x: 0, y: 0 });
   };
 
-  // 旋转图片
   const handleRotate = (degrees: number) => {
     setRotation((prev) => (prev + degrees) % 360);
+  };
+
+  // 加载动画组件
+  const LoadingSpinner = ({ size = "md" }: { size?: "sm" | "md" | "lg" }) => {
+    const sizeClasses = {
+      sm: "w-6 h-6 border-2",
+      md: "w-12 h-12 border-3",
+      lg: "w-20 h-20 border-4"
+    };
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg">
+        <div className="flex flex-col items-center gap-3">
+          <div className={`${sizeClasses[size]} border-blue-500 border-t-transparent rounded-full animate-spin`} />
+          <span className="text-sm text-gray-600 dark:text-gray-300 animate-pulse">
+            加载中...
+          </span>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -219,15 +323,25 @@ function DocumentViewer({
           {/* 图片区域 - 自适应大小 */}
           <div className="flex-1 flex justify-center items-center">
             <div className="relative w-full max-w-[600px] lg:max-w-[700px]">
+              {isImageLoading && <LoadingSpinner size="md" />}
               <img 
+                ref={mainImgRef}
                 src={imageError ? '/images/placeholder.png' : getImagePath(imageUrl)} 
                 alt={displayTitle}
-                className="w-full h-auto cursor-pointer rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+                className={`w-full h-auto cursor-pointer rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 ${
+                  isImageLoading ? 'opacity-0' : 'opacity-100'
+                }`}
                 onClick={handleOpenFullscreen}
                 onError={handleImageError}
+                onLoad={() => setIsImageLoading(false)}
+                loading="lazy"
+                style={{ 
+                  transition: 'opacity 0.3s ease',
+                  display: isImageLoading ? 'none' : 'block'
+                }}
               />
               {/* 图片角标 */}
-              <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
+              <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full pointer-events-none">
                 🔍 点击放大
               </div>
             </div>
@@ -310,10 +424,16 @@ function DocumentViewer({
           onClick={handlePdfViewerClick}
         >
           <div className="relative w-[90vw] h-[90vh] bg-white rounded-lg shadow-2xl overflow-hidden">
+            {isPdfLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white z-20">
+                <LoadingSpinner size="lg" />
+              </div>
+            )}
+            
             {/* PDF关闭按钮 */}
             <button
               className="
-                absolute top-4 right-4 z-10
+                absolute top-4 right-4 z-30
                 text-gray-700 text-4xl
                 hover:text-gray-900
                 transition-colors duration-200
@@ -329,7 +449,7 @@ function DocumentViewer({
             </button>
 
             {/* PDF标题 - 使用 displayTitle */}
-            <div className="absolute top-4 left-4 z-10">
+            <div className="absolute top-4 left-4 z-30">
               <h3 className="text-xl font-semibold text-gray-800 bg-white/90 px-4 py-2 rounded-lg shadow-lg">
                 📄 {displayTitle}
               </h3>
@@ -337,10 +457,13 @@ function DocumentViewer({
 
             {/* PDF内容 */}
             <iframe
+              ref={pdfIframeRef}
               src={pdfUrl}
-              className="w-full h-full"
+              className="w-full h-full relative z-10"
               title={displayTitle}
               style={{ border: 'none' }}
+              onLoad={() => setIsPdfLoading(false)}
+              sandbox="allow-scripts allow-same-origin"
             />
           </div>
         </div>
@@ -362,27 +485,37 @@ function DocumentViewer({
           style={{ cursor: scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default' }}
         >
           <div className="relative w-full h-full flex items-center justify-center p-4 overflow-hidden">
+            {/* 加载状态 */}
+            {isFullscreenImageLoading && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <LoadingSpinner size="lg" />
+              </div>
+            )}
+            
             {/* 图片容器 */}
             <div 
               className="relative"
               style={{
                 transform: `scale(${scale}) rotate(${rotation}deg) translate(${position.x / scale}px, ${position.y / scale}px)`,
-                transition: isDragging ? 'none' : 'transform 0.2s ease'
+                transition: isDragging ? 'none' : 'transform 0.2s ease',
+                opacity: isFullscreenImageLoading ? 0 : 1
               }}
             >
               <img 
+                ref={fullscreenImgRef}
                 src={imageError ? '/images/placeholder.png' : getImagePath(imageUrl)} 
                 alt={displayTitle}
                 className="max-w-[95vw] max-h-[95vh] object-contain select-none"
                 onError={handleImageError}
                 draggable={false}
+                onLoad={() => setIsFullscreenImageLoading(false)}
               />
             </div>
 
             {/* 顶部控制栏 - 标题和关闭按钮在同一排 */}
-            <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
               {/* 标题 - 使用 displayTitle */}
-              <div className="text-black text-lg font-medium bg-white/80 px-4 py-2 rounded-lg backdrop-blur-sm">
+              <div className="text-black text-lg font-medium bg-white/80 px-4 py-2 rounded-lg backdrop-blur-sm pointer-events-auto">
                 {displayTitle}
               </div>
               
@@ -396,6 +529,7 @@ function DocumentViewer({
                   rounded-full w-12 h-12
                   flex items-center justify-center
                   hover:bg-opacity-70
+                  pointer-events-auto
                 "
                 onClick={(e) => {
                   e.stopPropagation();
@@ -407,7 +541,7 @@ function DocumentViewer({
             </div>
 
             {/* 底部控制按钮 - 缩放和旋转 */}
-            <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex items-center gap-2 bg-black/50 backdrop-blur-sm rounded-full px-3 py-2">
+            <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 flex items-center gap-2 bg-black/50 backdrop-blur-sm rounded-full px-3 py-2 pointer-events-auto">
               {/* 缩放控制 */}
               <button
                 className="text-white hover:text-gray-300 transition-colors duration-200 text-sm px-3 py-1"
@@ -475,6 +609,11 @@ function DocumentViewer({
               >
                 ⟲
               </button>
+            </div>
+
+            {/* 底部提示 */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white/60 text-xs bg-black/30 px-3 py-1 rounded-full pointer-events-none">
+              🖱️ 滚轮缩放 · 拖拽移动 · 点击外部退出
             </div>
           </div>
         </div>
