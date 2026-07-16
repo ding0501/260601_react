@@ -42,8 +42,6 @@ function VideoViewer({
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isBuffering, setIsBuffering] = useState(false);
-  const [loadProgress, setLoadProgress] = useState(0);
-  const [isPreloaded, setIsPreloaded] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const [pdfLoading, setPdfLoading] = useState(true);
   const [pdfError, setPdfError] = useState(false);
@@ -111,78 +109,6 @@ function VideoViewer({
     }
     return pdfUrl.startsWith('/') ? pdfUrl : `/${pdfUrl}`;
   }, [pdfUrl]);
-
-  // ========== 预加载视频 ==========
-  useEffect(() => {
-    if (!videoPath || isPreloaded || !isMountedRef.current) return;
-
-    const preloadVideo = document.createElement('video');
-    preloadVideo.preload = 'auto';
-    preloadVideo.src = videoPath;
-    preloadVideo.muted = true;
-    preloadVideo.style.display = 'none';
-    document.body.appendChild(preloadVideo);
-
-    let progressInterval: NodeJS.Timeout | null = null;
-
-    const handleProgress = () => {
-      if (preloadVideo.buffered.length > 0) {
-        const bufferedEnd = preloadVideo.buffered.end(preloadVideo.buffered.length - 1);
-        const duration = preloadVideo.duration || 1;
-        const progress = Math.min((bufferedEnd / duration) * 100, 100);
-        setLoadProgress(progress);
-        if (progress >= 100) {
-          setIsPreloaded(true);
-          setIsLoading(false);
-          if (progressInterval) clearInterval(progressInterval);
-        }
-      }
-    };
-
-    const handleCanPlay = () => {
-      setIsPreloaded(true);
-      setIsLoading(false);
-      if (progressInterval) clearInterval(progressInterval);
-      setTimeout(() => {
-        if (preloadVideo.parentNode) {
-          preloadVideo.parentNode.removeChild(preloadVideo);
-        }
-      }, 1000);
-    };
-
-    const handleError = () => {
-      if (progressInterval) clearInterval(progressInterval);
-      if (preloadVideo.parentNode) {
-        preloadVideo.parentNode.removeChild(preloadVideo);
-      }
-    };
-
-    preloadVideo.addEventListener('progress', handleProgress);
-    preloadVideo.addEventListener('canplay', handleCanPlay);
-    preloadVideo.addEventListener('error', handleError);
-    preloadVideo.addEventListener('loadedmetadata', () => {
-      progressInterval = setInterval(handleProgress, 500);
-    });
-
-    preloadVideo.load();
-
-    return () => {
-      if (progressInterval) clearInterval(progressInterval);
-      if (preloadVideo.parentNode) {
-        preloadVideo.parentNode.removeChild(preloadVideo);
-      }
-      preloadVideo.removeEventListener('progress', handleProgress);
-      preloadVideo.removeEventListener('canplay', handleCanPlay);
-      preloadVideo.removeEventListener('error', handleError);
-    };
-  }, [videoPath, isPreloaded]);
-
-  // ========== 预加载图片 ==========
-  useEffect(() => {
-    if (!imagePath || imageError) return;
-    const img = new Image();
-    img.src = imagePath;
-  }, [imagePath, imageError]);
 
   // ========== 组件挂载/卸载 ==========
   useEffect(() => {
@@ -626,20 +552,6 @@ function VideoViewer({
           font-weight: 500;
           text-shadow: 0 1px 4px rgba(0,0,0,0.5);
         }
-        .video-loading-progress {
-          margin-top: 8px;
-          width: 200px;
-          height: 4px;
-          background: rgba(255,255,255,0.3);
-          border-radius: 2px;
-          overflow: hidden;
-        }
-        .video-loading-progress-bar {
-          height: 100%;
-          background: linear-gradient(to right, #60a5fa, #a78bfa);
-          border-radius: 2px;
-          transition: width 0.3s ease;
-        }
         .video-buffering-indicator {
           position: absolute;
           top: 50%;
@@ -679,11 +591,8 @@ function VideoViewer({
           <div className="text-sm md:text-base text-gray-600 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 px-4 py-2 rounded-full backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 flex-shrink-0">
             🎬 点击视频切换播放/暂停&nbsp;&nbsp;
             <span className="text-red-600 dark:text-red-400">默认是静音播放</span>
-            {isPreloaded && (
-              <span className="ml-2 text-green-500 dark:text-green-400">✅ 已预加载</span>
-            )}
-            {isLoading && !isPreloaded && (
-              <span className="ml-2 text-yellow-500 dark:text-yellow-400">⏳ 加载中 {Math.round(loadProgress)}%</span>
+            {isLoading && (
+              <span className="ml-2 text-yellow-500 dark:text-yellow-400">⏳ 加载中...</span>
             )}
           </div>
         </div>
@@ -724,17 +633,10 @@ function VideoViewer({
           <div className="flex-1 flex flex-col justify-center items-center">
             <div className="relative w-full max-w-[600px] lg:max-w-[700px]">
               {/* 加载状态 */}
-              {isLoading && !videoError && !isPreloaded && (
+              {isLoading && !videoError && (
                 <div className="video-loading-overlay">
                   <div className="video-loading-spinner" />
-                  <div className="video-loading-text">
-                    {loadProgress > 0 ? `加载中 ${Math.round(loadProgress)}%` : '准备加载...'}
-                  </div>
-                  {loadProgress > 0 && (
-                    <div className="video-loading-progress">
-                      <div className="video-loading-progress-bar" style={{ width: `${loadProgress}%` }} />
-                    </div>
-                  )}
+                  <div className="video-loading-text">加载中...</div>
                 </div>
               )}
 
@@ -784,7 +686,6 @@ function VideoViewer({
                   muted={isMuted}
                   loop
                   autoPlay={autoPlay}
-                  preload="auto"
                 />
               )}
 
@@ -861,7 +762,7 @@ function VideoViewer({
 
               {/* 状态指示器 */}
               <div className="absolute top-2 right-2 bg-black/50 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full">
-                {isLoading && !isPreloaded ? '⏳ 加载中...' : 
+                {isLoading ? '⏳ 加载中...' : 
                  isBuffering ? '⏳ 缓冲中...' :
                  isPlaying ? '▶ 播放中' : '⏸ 已暂停'}
               </div>

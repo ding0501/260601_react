@@ -27,8 +27,6 @@ function VideoViewerFit({
   const [isMuted, setIsMuted] = useState(muted);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isLoading1, setIsLoading1] = useState(true);
-  const [isLoading2, setIsLoading2] = useState(true);
   const [isFullscreenLoading, setIsFullscreenLoading] = useState(false);
   
   const video1Ref = useRef<HTMLVideoElement>(null); // 右侧
@@ -68,73 +66,26 @@ function VideoViewerFit({
     };
   }, [isFullscreen]);
 
-  // 预加载和自动播放逻辑
+  // 自动播放逻辑 - 左侧视频
   useEffect(() => {
     const video = video2Ref.current;
     if (!video || !video_2) return;
 
-    // 设置预加载策略 - 预加载元数据和部分内容
-    video.preload = "auto";
-    
-    // 加载完成后隐藏加载状态
-    const handleLoadedData = () => {
-      setIsLoading2(false);
-    };
-
-    const handleCanPlay = () => {
-      setIsLoading2(false);
-    };
-
-    video.addEventListener("loadeddata", handleLoadedData);
-    video.addEventListener("canplay", handleCanPlay);
-
-    // 如果视频已经加载完成
-    if (video.readyState >= 3) {
-      setIsLoading2(false);
-    }
-
-    // 自动播放
     if (autoPlay && !hasUserInteracted) {
       video.muted = true;
       video.play().catch(() => {});
     }
-
-    return () => {
-      video.removeEventListener("loadeddata", handleLoadedData);
-      video.removeEventListener("canplay", handleCanPlay);
-    };
   }, [video_2, autoPlay, hasUserInteracted]);
 
+  // 自动播放逻辑 - 右侧视频
   useEffect(() => {
     const video = video1Ref.current;
     if (!video || !video_1) return;
 
-    video.preload = "auto";
-
-    const handleLoadedData = () => {
-      setIsLoading1(false);
-    };
-
-    const handleCanPlay = () => {
-      setIsLoading1(false);
-    };
-
-    video.addEventListener("loadeddata", handleLoadedData);
-    video.addEventListener("canplay", handleCanPlay);
-
-    if (video.readyState >= 3) {
-      setIsLoading1(false);
-    }
-
     if (autoPlay && !hasUserInteracted) {
       video.muted = true;
       video.play().catch(() => {});
     }
-
-    return () => {
-      video.removeEventListener("loadeddata", handleLoadedData);
-      video.removeEventListener("canplay", handleCanPlay);
-    };
   }, [video_1, autoPlay, hasUserInteracted]);
 
   // 同步左侧视频播放状态
@@ -172,10 +123,8 @@ function VideoViewerFit({
   const handleVideoError = (side: 'left' | 'right') => {
     if (side === 'left') {
       setVideoError2(true);
-      setIsLoading2(false);
     } else {
       setVideoError1(true);
-      setIsLoading1(false);
     }
   };
 
@@ -236,8 +185,6 @@ function VideoViewerFit({
     
     setTimeout(() => {
       if (fullscreenVideoRef.current && videoSrc) {
-        // 预加载全屏视频
-        fullscreenVideoRef.current.preload = "auto";
         fullscreenVideoRef.current.src = videoSrc;
         fullscreenVideoRef.current.currentTime = currentTime;
         fullscreenVideoRef.current.muted = isMuted;
@@ -340,24 +287,20 @@ function VideoViewerFit({
                       </div>
                     </div>
                   ) : (
-                    <>
-                      <video
-                        ref={video2Ref}
-                        src={getVideoPath(video_2)}
-                        className="w-full h-full object-contain"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleVideoClick('left');
-                        }}
-                        onError={() => handleVideoError('left')}
-                        playsInline
-                        muted={isMuted}
-                        loop
-                        autoPlay={autoPlay}
-                        preload="auto"
-                      />
-                      {isLoading2 && <LoadingSpinner size="md" />}
-                    </>
+                    <video
+                      ref={video2Ref}
+                      src={getVideoPath(video_2)}
+                      className="w-full h-full object-contain"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleVideoClick('left');
+                      }}
+                      onError={() => handleVideoError('left')}
+                      playsInline
+                      muted={isMuted}
+                      loop
+                      autoPlay={autoPlay}
+                    />
                   )}
                 </div>
                 
@@ -410,24 +353,20 @@ function VideoViewerFit({
                       </div>
                     </div>
                   ) : (
-                    <>
-                      <video
-                        ref={video1Ref}
-                        src={getVideoPath(video_1)}
-                        className="w-full h-full object-contain"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleVideoClick('right');
-                        }}
-                        onError={() => handleVideoError('right')}
-                        playsInline
-                        muted={isMuted}
-                        loop
-                        autoPlay={autoPlay}
-                        preload="auto"
-                      />
-                      {isLoading1 && <LoadingSpinner size="md" />}
-                    </>
+                    <video
+                      ref={video1Ref}
+                      src={getVideoPath(video_1)}
+                      className="w-full h-full object-contain"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleVideoClick('right');
+                      }}
+                      onError={() => handleVideoError('right')}
+                      playsInline
+                      muted={isMuted}
+                      loop
+                      autoPlay={autoPlay}
+                    />
                   )}
                 </div>
                 
@@ -488,7 +427,6 @@ function VideoViewerFit({
               loop
               autoPlay
               controls
-              preload="auto"
             />
             
             <button
