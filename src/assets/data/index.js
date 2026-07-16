@@ -165,7 +165,14 @@ export const NEW_ARRIVALS_LIST_3 = [
   
 ];
 export const NEW_ARRIVALS_LIST_4 = [
- 
+ {
+    title: "",
+    image: "/documents/SolidWorks/零件工程图033.png",
+    video: "/documents/SolidWorks/零件033.mp4",
+    document: "/documents/SolidWorks/零件工程图033.pdf",
+    textColor: "black",
+    soldOut: false
+  },
   {
     title: "",
     image: "/documents/SolidWorks/零件工程图031.png",
